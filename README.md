@@ -45,7 +45,7 @@ o Zobrazuje desítkové číslice na 7segmentových displejích.
 
 # Testbecnch
 
-library IEEE;
+-- library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
