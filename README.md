@@ -44,5 +44,6 @@ o Provádí resetování systému.
 o Zobrazuje desítkové číslice na 7segmentových displejích.
 
 # Hardware design
+![INOUT](https://github.com/user-attachments/assets/b8bc4688-fddc-4d11-9dc0-70a9965f4a90)
 
 ![hardware](https://github.com/user-attachments/assets/9329ce82-92b5-4aab-9ac6-ef83b5c2c08e)
