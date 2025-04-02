@@ -1,4 +1,6 @@
-# DE1-Project-Ultrasonic-sensor
+# Team members
 
-
-cs
+Adam Čermák
+Tomáš Běčák
+Mykhailo Krasichkov
+Daniel Kroužil
