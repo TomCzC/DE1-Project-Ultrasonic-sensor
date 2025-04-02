@@ -40,7 +40,7 @@ o Zpracovává data z přepínačů a modulu Ultrasonic_Receiver.vhd.
 o Generuje data pro zobrazení na displejích.
 o Ovládá červenou LED diodu.
 o Provádí resetování systému.
-• Display_Control.vhd:
+- Display_Control.vhd:
 o Zobrazuje desítkové číslice na 7segmentových displejích.
 
 # Hardware design
