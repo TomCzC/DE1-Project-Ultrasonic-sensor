@@ -231,7 +231,7 @@ end ultrasonic_transmitter;
 
 architecture Behavioral of ultrasonic_transmitter is
     -- Konstantu určující šířku generovaného pulzu (počet taktů)
-    constant PULSE_WIDTH : integer := 10;  -- upravte dle potřeby
+    constant PULSE_WIDTH : integer := 10;
     signal counter : integer range 0 to PULSE_WIDTH := 0;
     type state_type is (IDLE, PULSE);
     signal state : state_type := IDLE;
