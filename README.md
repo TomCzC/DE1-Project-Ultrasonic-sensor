@@ -45,7 +45,8 @@ o Zobrazuje desítkové číslice na 7segmentových displejích.
 
 # Testbench Controller
 
-''' library IEEE;
+``` tb
+library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
