@@ -43,6 +43,7 @@ o Provádí resetování systému.
 - Display_Control.vhd:
 o Zobrazuje desítkové číslice na 7segmentových displejích.
 
+
 # Controller
 
 ``` 
@@ -213,6 +214,58 @@ end Behavioral;
 
 ```
 
+# Transmitter
+
+```
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity ultrasonic_transmitter is
+    Port (
+        clk        : in  std_logic;
+        trig_start : in  std_logic;
+        trig_sim   : out std_logic
+    );
+end ultrasonic_transmitter;
+
+architecture Behavioral of ultrasonic_transmitter is
+    -- Konstantu určující šířku generovaného pulzu (počet taktů)
+    constant PULSE_WIDTH : integer := 10;  -- upravte dle potřeby
+    signal counter : integer range 0 to PULSE_WIDTH := 0;
+    type state_type is (IDLE, PULSE);
+    signal state : state_type := IDLE;
+begin
+
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            case state is
+                when IDLE =>
+                    trig_sim <= '0';
+                    if trig_start = '1' then
+                        state   <= PULSE;
+                        counter <= 0;
+                        trig_sim <= '1';
+                    end if;
+                   
+                when PULSE =>
+                    if counter < PULSE_WIDTH - 1 then
+                        counter <= counter + 1;
+                        trig_sim <= '1';
+                    else
+                        trig_sim <= '0';
+                        state   <= IDLE;
+                    end if;
+                   
+                when others =>
+                    state <= IDLE;
+            end case;
+        end if;
+    end process;
+
+end Behavioral;
+```
 
 # Hardware design
 ![INOUT](https://github.com/user-attachments/assets/b8bc4688-fddc-4d11-9dc0-70a9965f4a90)
