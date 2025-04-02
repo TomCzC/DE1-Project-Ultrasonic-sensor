@@ -15,27 +15,27 @@ An abstract is a short summary of your project, usually about a paragraph (6-7 s
 
 # Components & Functions
 
-• Přepínače SW(15:8):
+- Přepínače SW(15:8):
 o Slouží k nastavení simulované vzdálenosti (0-255 cm).
-• Přepínače SW(7:0):
+- Přepínače SW(7:0):
 o Slouží k nastavení prahové hodnoty pro varování (0-255 cm).
-• Tlačítko BTNC (start):
+- Tlačítko BTNC (start):
 o Spouští simulaci měření vzdálenosti v modulu Ultrasonic_Receiver.vhd.
-• Tlačítko BTND (reset):
+- Tlačítko BTND (reset):
 o Resetuje celý systém do výchozího stavu (vzdálenost, prahová hodnota,
 displeje, LED dioda).
-• 7segmentové displeje:
+- 7segmentové displeje:
 o Displeje 0-2 zobrazují simulovanou vzdálenost.
 o Displeje 5-7 zobrazují nastavenou prahovou hodnotu.
-• Červená LED dioda:
+- Červená LED dioda:
 o Slouží jako vizuální varování, rozsvítí se, pokud je simulovaná vzdálenost menší
 než prahová hodnota.
-• Ultrasonic_Transmitter.vhd:
+- Ultrasonic_Transmitter.vhd:
 o Simuluje vysílání ultrazvukového signálu.
-• Ultrasonic_Receiver.vhd:
+- Ultrasonic_Receiver.vhd:
 o Simuluje příjem ultrazvukového signálu a generuje signály dist_sim
 (simulovaná vzdálenost) a dist_valid (indikace platnosti dat).
-• Controller.vhd:
+- Controller.vhd:
 o Zpracovává data z přepínačů a modulu Ultrasonic_Receiver.vhd.
 o Generuje data pro zobrazení na displejích.
 o Ovládá červenou LED diodu.
