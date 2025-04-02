@@ -1,8 +1,8 @@
 # Team members
 
-Adam Čermák,
-Tomáš Běčák,
-Mykhailo Krasichkov,
+Adam Čermák;
+Tomáš Běčák;
+Mykhailo Krasichkov;
 Daniel Kroužil
 
 # Abstract
