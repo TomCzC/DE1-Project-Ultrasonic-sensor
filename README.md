@@ -43,7 +43,7 @@ o Provádí resetování systému.
 - Display_Control.vhd:
 o Zobrazuje desítkové číslice na 7segmentových displejích.
 
-# Testbecnch
+# Testbench Controller
 
 ''' library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
