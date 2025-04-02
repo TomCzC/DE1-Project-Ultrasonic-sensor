@@ -267,6 +267,68 @@ begin
 end Behavioral;
 ```
 
+# Reciever
+
+```
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity ultrasonic_receiver is
+    Port (
+        clk        : in  std_logic;
+        trig_sim   : in  std_logic;
+        dist_sim   : out std_logic_vector(7 downto 0);
+        dist_valid : out std_logic
+    );
+end ultrasonic_receiver;
+
+architecture Behavioral of ultrasonic_receiver is
+    -- Konstanty pro simulaci
+    constant DELAY_CYCLES : integer := 20;  -- počet taktů pro simulaci doby šíření
+    constant SIM_DISTANCE : std_logic_vector(7 downto 0) := "00101010";  -- simulovaná vzdálenost, např. 42 cm
+
+    signal counter : integer range 0 to DELAY_CYCLES := 0;
+    type state_type is (IDLE, DELAY, VALID);
+    signal state : state_type := IDLE;
+begin
+
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            case state is
+                when IDLE =>
+                    dist_valid <= '0';
+                    -- V tomto stavu čekáme na aktivní vstup trig_sim
+                    if trig_sim = '1' then
+                        counter <= 0;
+                        state   <= DELAY;
+                    end if;
+                   
+                when DELAY =>
+                    -- Simulujeme dobu šíření signálu
+                    if counter < DELAY_CYCLES - 1 then
+                        counter <= counter + 1;
+                    else
+                        state <= VALID;
+                    end if;
+                   
+                when VALID =>
+                    -- Po uplynutí zpoždění je výstup měření aktivován na jeden takt
+                    dist_sim   <= SIM_DISTANCE;
+                    dist_valid <= '1';
+                    state      <= IDLE;
+                   
+                when others =>
+                    state <= IDLE;
+            end case;
+        end if;
+    end process;
+
+end Behavioral;
+```
+
+
 # Hardware design
 ![INOUT](https://github.com/user-attachments/assets/b8bc4688-fddc-4d11-9dc0-70a9965f4a90)
 
