@@ -4,27 +4,28 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity echo_receiver is
     Port (
-        clk         : in  STD_LOGIC;                     -- System clock (100 MHz)
-        reset       : in  STD_LOGIC;                     -- Active-high reset
-        echo_pulse  : in  STD_LOGIC;                     -- Echo pulse from ultrasonic sensor
-        distance    : out STD_LOGIC_VECTOR(8 downto 0);  -- Calculated distance in cm
-        ready       : out STD_LOGIC;                     -- High when distance measurement is ready
-        timeout     : out STD_LOGIC                      -- High when no echo detected (timeout)
+        clk         : in  STD_LOGIC;                    -- System clock (100 MHz)
+        reset       : in  STD_LOGIC;                    -- Active-high reset
+        echo_pulse  : in  STD_LOGIC;                    -- Echo pulse from ultrasonic sensor
+        distance    : out STD_LOGIC_VECTOR(8 downto 0); -- Calculated distance in cm (9-bit)
+        ready       : out STD_LOGIC;                    -- High when distance measurement is ready
+        timeout     : out STD_LOGIC                     -- High when no echo detected (timeout)
     );
 end echo_receiver;
 
 architecture Behavioral of echo_receiver is
     -- Constants
-    constant CLK_FREQ      : integer := 100_000_000;     -- 100 MHz clock
-    constant SOUND_SPEED   : integer := 34300;           -- Speed of sound in cm/s (343 m/s)
+    constant CLK_FREQ      : integer := 100_000_000;    -- 100 MHz clock
+    constant SOUND_SPEED   : integer := 34300;          -- Speed of sound in cm/s (343 m/s)
     constant TIMEOUT_CYCLES: integer := CLK_FREQ * 60 / 1000; -- 60ms timeout (~10m range)
+    constant MAX_DISTANCE  : integer := 511;            -- Maximum representable distance (2^9 - 1)
     
     -- Internal signals
     signal counter         : unsigned(31 downto 0) := (others => '0');
     signal echo_reg        : STD_LOGIC_VECTOR(1 downto 0) := "00";
     signal echo_start      : STD_LOGIC := '0';
     signal echo_end        : STD_LOGIC := '0';
-    signal measuring      : STD_LOGIC := '0';
+    signal measuring       : STD_LOGIC := '0';
     signal timeout_counter : unsigned(31 downto 0) := (others => '0');
     
 begin
@@ -44,7 +45,7 @@ begin
     
     -- Measurement process
     process(clk)
-        variable distance_temp : unsigned(31 downto 0);
+        variable distance_temp : integer;
     begin
         if rising_edge(clk) then
             if reset = '1' then
@@ -76,7 +77,7 @@ begin
                         if timeout_counter >= TIMEOUT_CYCLES then
                             measuring <= '0';
                             timeout <= '1';
-                            distance <= (others => '1'); -- Max distance or error value
+                            distance <= std_logic_vector(to_unsigned(MAX_DISTANCE, 9));
                             ready <= '1';
                         end if;
                     else
@@ -84,12 +85,15 @@ begin
                         if echo_end = '1' then
                             measuring <= '0';
                             -- Distance calculation for 100 MHz clock:
-                            -- Each clock cycle = 10 ns
-                            -- Distance (cm) = (counter * 10ns * 34300 cm/s) / 2
-                            --              = (counter * 343) / 20000
-                            -- To avoid floating point, we'll use integer math with scaling
-                            distance_temp := (counter * 343) / 20000;
-                            distance <= std_logic_vector(resize(distance_temp, 16));
+                            -- distance_temp = (counter * 343) / 20000
+                            distance_temp := (to_integer(counter) * 343) / 20000;
+                            
+                            -- Cap the distance at MAX_DISTANCE
+                            if distance_temp > MAX_DISTANCE then
+                                distance_temp := MAX_DISTANCE;
+                            end if;
+                            
+                            distance <= std_logic_vector(to_unsigned(distance_temp, 9));
                             ready <= '1';
                         end if;
                     end if;
@@ -97,5 +101,4 @@ begin
             end if;
         end if;
     end process;
-    
 end Behavioral;
