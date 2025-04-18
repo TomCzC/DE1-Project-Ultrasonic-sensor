@@ -14,9 +14,7 @@ entity trig_pulse is
     Port ( clk : in STD_LOGIC;
            start : in STD_LOGIC;
            trig1 : out STD_LOGIC;
-           trig2 : out STD_LOGIC;
-           trig3 : out STD_LOGIC;
-           trig4 : out STD_LOGIC);
+           trig2 : out STD_LOGIC);
 end trig_pulse;
 
 architecture Behavioral of trig_pulse is
@@ -42,8 +40,5 @@ begin
 
     trig1 <= pulse_active;
     trig2 <= pulse_active;
-    trig3 <= pulse_active;
-    trig4 <= pulse_active;
-
 
 end Behavioral;
