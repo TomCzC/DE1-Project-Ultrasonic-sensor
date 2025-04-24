@@ -7,16 +7,13 @@ entity top_level is
         CLK100MHZ : in STD_LOGIC;
         SW       : in STD_LOGIC_VECTOR (8 downto 0);
         JC0      : in STD_LOGIC;   -- Echo sensor 1
-        JC1      : in STD_LOGIC;   -- Echo sensor 2
-        JB0      : in STD_LOGIC;   -- Optional input (not used)
-        JB1      : in STD_LOGIC;   -- Optional input (not used)
-        JD0      : out STD_LOGIC;  -- Trigger sensor 1
-        JD1      : out STD_LOGIC;  -- Trigger sensor 2
-        JA0      : out STD_LOGIC;  -- Optional output (not used)
-        JA1      : out STD_LOGIC;  -- Optional output (not used)
-        BTNC     : in STD_LOGIC;  -- Reset
-        BTND     : in STD_LOGIC;  -- Display mode toggle
-        LED      : out STD_LOGIC_VECTOR (2 downto 0);  -- LEDs for status/alarm
+        JA0      : out STD_LOGIC;   -- Trigger               
+        JB0      : in STD_LOGIC;   -- Echo sensor 2
+        JD0      : out STD_LOGIC;   -- Trigger     
+        BTNC     : in STD_LOGIC;   -- Reset
+        BTND     : in STD_LOGIC;   -- Show data button
+        BTNU     : in STD_LOGIC;   -- Show threshold button
+        LED      : out STD_LOGIC_VECTOR (15 downto 0);  -- 16 LEDs
         CA       : out STD_LOGIC;  -- Seven segment A
         CB       : out STD_LOGIC;  -- Seven segment B
         CC       : out STD_LOGIC;  -- Seven segment C
@@ -67,13 +64,16 @@ architecture Behavioral of top_level is
     
     component display_control is
         Port (
-            clk          : in  std_logic;
-            reset        : in  std_logic;
-            distance1    : in  std_logic_vector(11 downto 0);
-            distance2    : in  std_logic_vector(11 downto 0);
-            show_data    : in  std_logic;
-            seg          : out std_logic_vector(6 downto 0);
-            an           : out std_logic_vector(7 downto 0)
+            clk           : in  std_logic;
+            reset         : in  std_logic;
+            distance1     : in  std_logic_vector(8 downto 0);
+            distance2     : in  std_logic_vector(8 downto 0);
+            threshold     : in  std_logic_vector(8 downto 0);
+            show_data_btn : in  std_logic;
+            show_thresh_btn: in std_logic;
+            seg           : out std_logic_vector(6 downto 0);
+            an            : out std_logic_vector(7 downto 0);
+            leds          : out std_logic_vector(15 downto 0)
         );
     end component;
     
@@ -105,12 +105,11 @@ architecture Behavioral of top_level is
     
     -- Display signals
     signal seg_data : std_logic_vector(6 downto 0);
-    signal distance1_display : std_logic_vector(11 downto 0);
-    signal distance2_display : std_logic_vector(11 downto 0);
+    signal anodes : std_logic_vector(7 downto 0);
+    signal leds_internal : std_logic_vector(15 downto 0);
     
     -- Trigger control
     signal trigger_start : std_logic;
-    signal trigger_pulse : std_logic;
     
     -- Clock enable for display refresh
     signal display_refresh : std_logic;
@@ -131,7 +130,7 @@ begin
         );
     
     -- Instantiate echo receivers
-    echo_receiver1: echo_receiver
+    echo_receiver_inst1: echo_receiver
         port map (
             clk => CLK100MHZ,
             reset => reset,
@@ -141,18 +140,18 @@ begin
             timeout => timeout1
         );
     
-    echo_receiver2: echo_receiver
+    echo_receiver_inst2: echo_receiver
         port map (
             clk => CLK100MHZ,
             reset => reset,
-            echo_pulse => JC1,
+            echo_pulse => JB0,
             distance => distance2_raw,
             ready => ready2,
             timeout => timeout2
         );
     
     -- Instantiate controllers
-    controller1: controller
+    controller_inst1: controller
         port map (
             clk => CLK100MHZ,
             reset => reset,
@@ -165,7 +164,7 @@ begin
             thd => thd1
         );
     
-    controller2: controller
+    controller_inst2: controller
         port map (
             clk => CLK100MHZ,
             reset => reset,
@@ -188,23 +187,20 @@ begin
         );
     
     -- Connect triggers to outputs
-    JD0 <= trigger1;
-    JD1 <= trigger2;
-    
-    -- Prepare display data (extend to 12 bits)
-    distance1_display <= "000" & distance1_processed;
-    distance2_display <= "000" & distance2_processed;
     
     -- Instantiate display controller
     display: display_control
         port map (
-            clk => display_refresh,
+            clk => CLK100MHZ,
             reset => reset,
-            distance1 => distance1_display,
-            distance2 => distance2_display,
-            show_data => BTND,  -- Use BTND to toggle display mode
+            distance1 => distance1_processed,
+            distance2 => distance2_processed,
+            threshold => SW(8 downto 0),
+            show_data_btn => BTND,
+            show_thresh_btn => BTNU,
             seg => seg_data,
-            an => AN
+            an => anodes,
+            leds => leds_internal
         );
     
     -- Connect seven-segment display outputs
@@ -216,14 +212,14 @@ begin
     CF <= seg_data(1);
     CG <= seg_data(0);
     DP <= '1';  -- Decimal point always off
+    AN <= anodes;
     
     -- LED assignments
-    LED(0) <= thd1;  -- Alarm for sensor 1
-    LED(1) <= thd2;  -- Alarm for sensor 2
-    LED(2) <= '1' when (thd1 = '1' or thd2 = '1') else '0';  -- Combined alarm
+    LED <= leds_internal;
     
     -- Unused outputs
-    JA0 <= '0';
-    JA1 <= '0';
+        JD0      <= '0';
+
+        JA0      <= '0';
     
 end Behavioral;
