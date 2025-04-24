@@ -21,9 +21,10 @@ architecture Behavioral of controller is
     constant ALARM_THRESHOLD : integer := 100; -- 100 cm
     
     type state_type is (IDLE, SEND_TRIGGER, WAIT_ECHO, PROCESS_DATA);
-    signal state : state_type := IDLE;
-    signal counter : unsigned(31 downto 0) := (others => '0');
-    signal distance_reg : STD_LOGIC_VECTOR(8 downto 0) := (others => '0');
+    signal state : state_type;
+    signal counter : unsigned(31 downto 0);
+    signal distance_reg : STD_LOGIC_VECTOR(8 downto 0);
+    signal alarm : std_logic;
     
 begin
     process(clk)
@@ -36,10 +37,13 @@ begin
                 thd <= '0';
                 distance_out <= (others => '0');
                 counter <= (others => '0');
+                distance_reg <= (others => '0');
+                alarm <= '0';
             else
                 case state is
                     when IDLE =>
                         trigger_out <= '0';
+                        valid <= '0';
                         if counter >= MEASUREMENT_INTERVAL-1 then
                             counter <= (others => '0');
                             state <= SEND_TRIGGER;
@@ -64,7 +68,12 @@ begin
                     when PROCESS_DATA =>
                         distance_out <= distance_reg;
                         valid <= '1';
-                        thd <= '1' when unsigned(distance_reg) < ALARM_THRESHOLD else '0';
+                        if unsigned(distance_reg) < ALARM_THRESHOLD then
+                            alarm <= '1';
+                        else
+                            alarm <= '0';
+                        end if;
+                        thd <= alarm;
                         state <= IDLE;
                         counter <= (others => '0');
                 end case;
