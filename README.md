@@ -59,6 +59,7 @@ Hlavní soubory
  - [controller.vhd](project_files/controller.vhd) – Řídí měřicí cyklus a komunikaci se senzory.
  - [trig_pulse.vhd](project_files/trig_pulse.vhd) – Generuje 10µs trigger pro HC-SR04.
  - [display_control.vhd](project_files/display_control.vhd) – Ovládá displej a LED.
+
 Časování měření
  - Každý senzor měří 1× za sekundu.
  - Pokud není detekována ozvěna, systém automaticky pokračuje v další měřicí smyčce.
