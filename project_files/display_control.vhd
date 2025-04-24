@@ -18,7 +18,7 @@ entity display_control is
 end display_control;
 
 architecture Behavioral of display_control is
-    constant REFRESH_DIVIDER : integer := 10;
+    constant REFRESH_DIVIDER : integer := 100000;
     signal refresh_counter : integer range 0 to REFRESH_DIVIDER-1 := 0;
     signal refresh_clk : std_logic := '0';
 
