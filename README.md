@@ -7,42 +7,32 @@ Daniel Kroužil
 
 # Abstract
 
-Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senzorů HC-SR04, řízených FPGA. Systém umožňuje:
+Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senzorů HS-SR04, řízených FPGA. Systém umožňuje:
  - Měření vzdálenosti v rozsahu 2–400 cm s rozlišením 1 cm
  - Zobrazení hodnot na 7-segmentovém displeji
  - Nastavení prahové hodnoty pomocí přepínačů (SW)
  - Vizuální signalizaci pomocí LED diod
 Senzory pracují nezávisle – jeden měří vzdálenost vlevo, druhý vpravo.
 
-# Components & Functions
+# Hardware
 
-- Přepínače SW(15:8):
-o Slouží k nastavení simulované vzdálenosti (0-255 cm).
-- Přepínače SW(7:0):
-o Slouží k nastavení prahové hodnoty pro varování (0-255 cm).
-- Tlačítko BTNC (start):
-o Spouští simulaci měření vzdálenosti v modulu Ultrasonic_Receiver.vhd.
-- Tlačítko BTND (reset):
-o Resetuje celý systém do výchozího stavu (vzdálenost, prahová hodnota,
-displeje, LED dioda).
-- 7segmentové displeje:
-o Displeje 0-2 zobrazují simulovanou vzdálenost.
-o Displeje 5-7 zobrazují nastavenou prahovou hodnotu.
-- Červená LED dioda:
-o Slouží jako vizuální varování, rozsvítí se, pokud je simulovaná vzdálenost menší
-než prahová hodnota.
-- Ultrasonic_Transmitter.vhd:
-o Simuluje vysílání ultrazvukového signálu.
-- Ultrasonic_Receiver.vhd:
-o Simuluje příjem ultrazvukového signálu a generuje signály dist_sim
-(simulovaná vzdálenost) a dist_valid (indikace platnosti dat).
-- Controller.vhd:
-o Zpracovává data z přepínačů a modulu Ultrasonic_Receiver.vhd.
-o Generuje data pro zobrazení na displejích.
-o Ovládá červenou LED diodu.
-o Provádí resetování systému.
-- Display_Control.vhd:
-o Zobrazuje desítkové číslice na 7segmentových displejích.
+Použité komponenty
+ - FPGA deska (Nexys A7-50T)
+ - Ultrazvukové senzory HC-SR04 (2×)
+
+# Zapojení 
+
+| Sloupec 1 | Sloupec 2 | Sloupec 3 |
+|-----------|-----------|-----------|
+| JA0       | Data 2    | Data 3    |
+| JC0       | Data 5    | Data 6    |
+| JD0       | Data 2    | Data 3    |
+| JB0       | Data 5    | Data 6    |
+| SW[8:0]   | Data 2    | Data 3    |
+| BTNU      | Tlačítko  | Reset     |
+| BTNC      | Data 5    | Zbrazení vzdálenosti    |
+| BTND      | Data 5    | Data 6    |
+
 
 # Hardware design
 ![INOUT](https://github.com/user-attachments/assets/b8bc4688-fddc-4d11-9dc0-70a9965f4a90)
