@@ -28,13 +28,18 @@ end top_level;
 
 architecture Behavioral of top_level is
     component echo_receiver is
-        Port (
-            clk         : in  STD_LOGIC;
-            reset       : in  STD_LOGIC;
-            echo_pulse  : in  STD_LOGIC;
-            distance    : out STD_LOGIC_VECTOR(8 downto 0);
-            ready       : out STD_LOGIC;
-            timeout     : out STD_LOGIC
+        generic (
+            DEVICE_NUMBER : INTEGER := 1;
+            MIN_DISTANCE : INTEGER := 50 
+        );
+        port ( 
+            trig        : in STD_LOGIC;
+            echo_in     : in STD_LOGIC;
+            clk        : in STD_LOGIC;
+            rst        : in STD_LOGIC;
+            dev_num    : out STD_LOGIC_VECTOR (2 downto 0);
+            distance   : out STD_LOGIC_VECTOR (8 downto 0);
+            status     : out STD_LOGIC 
         );
     end component;
     
@@ -93,12 +98,16 @@ architecture Behavioral of top_level is
     signal distance1_processed : std_logic_vector(8 downto 0);
     signal ready1, timeout1, valid1, thd1 : std_logic;
     signal trigger1_start, trigger1_pulse : std_logic;
+    signal dev_num1 : std_logic_vector(2 downto 0);
+    signal status1 : std_logic;
     
     -- Sensor 2 signals
     signal distance2_raw : std_logic_vector(8 downto 0);
     signal distance2_processed : std_logic_vector(8 downto 0);
     signal ready2, timeout2, valid2, thd2 : std_logic;
     signal trigger2_start, trigger2_pulse : std_logic;
+    signal dev_num2 : std_logic_vector(2 downto 0);
+    signal status2 : std_logic;
     
     -- Display signals
     signal seg_data : std_logic_vector(6 downto 0);
@@ -122,13 +131,18 @@ begin
     
     -- Sensor 1 components
     echo_receiver_inst1: echo_receiver
+        generic map (
+            DEVICE_NUMBER => 1,
+            MIN_DISTANCE => 50
+        )
         port map (
+            trig => trigger1_pulse,
+            echo_in => JC0,
             clk => CLK100MHZ,
-            reset => reset,
-            echo_pulse => JC0,
+            rst => reset,
+            dev_num => dev_num1,
             distance => distance1_raw,
-            ready => ready1,
-            timeout => timeout1
+            status => status1
         );
     
     controller_inst1: controller
@@ -136,8 +150,8 @@ begin
             clk => CLK100MHZ,
             reset => reset,
             distance_in => distance1_raw,
-            data_ready => ready1,
-            timeout => timeout1,
+            data_ready => status1,
+            timeout => '0',  -- Not used in current echo_receiver
             trigger_out => trigger1_start,
             distance_out => distance1_processed,
             valid => valid1,
@@ -153,13 +167,18 @@ begin
     
     -- Sensor 2 components
     echo_receiver_inst2: echo_receiver
+        generic map (
+            DEVICE_NUMBER => 2,
+            MIN_DISTANCE => 50
+        )
         port map (
+            trig => trigger2_pulse,
+            echo_in => JB0,
             clk => CLK100MHZ,
-            reset => reset,
-            echo_pulse => JB0,
+            rst => reset,
+            dev_num => dev_num2,
             distance => distance2_raw,
-            ready => ready2,
-            timeout => timeout2
+            status => status2
         );
     
     controller_inst2: controller
@@ -167,8 +186,8 @@ begin
             clk => CLK100MHZ,
             reset => reset,
             distance_in => distance2_raw,
-            data_ready => ready2,
-            timeout => timeout2,
+            data_ready => status2,
+            timeout => '0',  -- Not used in current echo_receiver
             trigger_out => trigger2_start,
             distance_out => distance2_processed,
             valid => valid2,
@@ -193,7 +212,7 @@ begin
             reset => reset,
             distance1 => distance1_processed,
             distance2 => distance2_processed,
-            threshold => SW(8 downto 0),
+            threshold => SW,
             show_data_btn => BTND,
             show_thresh_btn => BTNU,
             seg => seg_data,
