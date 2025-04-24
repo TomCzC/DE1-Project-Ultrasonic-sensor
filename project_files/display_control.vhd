@@ -18,7 +18,7 @@ entity display_control is
 end display_control;
 
 architecture Behavioral of display_control is
-    constant REFRESH_DIVIDER : integer := 100000;
+    constant REFRESH_DIVIDER : integer := 100000; -- Set to 10 during simulation for faster waveform updates; use 100000 in hardware for correct refresh rate.
     signal refresh_counter : integer range 0 to REFRESH_DIVIDER-1 := 0;
     signal refresh_clk : std_logic := '0';
 
