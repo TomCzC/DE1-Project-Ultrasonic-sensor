@@ -7,11 +7,12 @@ Daniel Kroužil
 
 # Abstract
 
-Projekt simuluje systém varování řidiče před překážkou při couvání, podobně jako parkovací
-senzory. Využívá k tomu FPGA desku Nexys A7-50T a 7segmentové displeje pro zobrazení
-vzdálenosti a prahové hodnoty
-
-An abstract is a short summary of your project, usually about a paragraph (6-7 sentences, 150-250 words) long. A well-written abstract serves multiple purposes: (a) an abstract lets readers get the gist or essence of your project quickly; (b) an abstract prepares readers to follow the detailed information, description, and results in your report; (c) and, later, an abstract helps readers remember key points from your project.
+Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senzorů HC-SR04, řízených FPGA. Systém umožňuje:
+-Měření vzdálenosti v rozsahu 2–400 cm s rozlišením 1 cm
+-Zobrazení hodnot na 7-segmentovém displeji
+-Nastavení prahové hodnoty pomocí přepínačů (SW)
+-Vizuální signalizaci pomocí LED diod
+Senzory pracují nezávisle – jeden měří vzdálenost vlevo, druhý vpravo.
 
 # Components & Functions
 
