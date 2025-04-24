@@ -42,7 +42,8 @@ architecture Behavioral of display_control is
     constant THRESHOLD_LEVEL1 : integer := 50;
     constant THRESHOLD_LEVEL2 : integer := 100;
 
-    signal an_internal : std_logic_vector(7 downto 0);  -- Internal anode signal
+    -- Internal anode signal with default value to avoid 'U' at simulation start
+    signal an_internal : std_logic_vector(7 downto 0) := (others => '1');
 
 begin
 
@@ -205,7 +206,9 @@ begin
             else
                 digit_counter <= 0;
             end if;
-       
+
+            an_internal <= (others => '1');
+            an_internal(digit_counter) <= '0';
             digit_value <= digits(digit_counter);
         end if;
     end process;
