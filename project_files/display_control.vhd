@@ -18,7 +18,7 @@ entity display_control is
 end display_control;
 
 architecture Behavioral of display_control is
-    constant REFRESH_DIVIDER : integer := 10;
+    constant REFRESH_DIVIDER : integer := 100000;
     signal refresh_counter : integer range 0 to REFRESH_DIVIDER-1 := 0;
     signal refresh_clk : std_logic := '0';
 
@@ -38,9 +38,6 @@ architecture Behavioral of display_control is
 
     signal leds_left  : std_logic_vector(2 downto 0);
     signal leds_right : std_logic_vector(2 downto 0);
-
-    constant THRESHOLD_LEVEL1 : integer := 50;
-    constant THRESHOLD_LEVEL2 : integer := 100;
 
     -- Internal anode signal with default value to avoid 'U' at simulation start
     signal an_internal : std_logic_vector(7 downto 0) := (others => '1');
@@ -121,37 +118,36 @@ begin
         end if;
     end process;
 
-    -- LED logic
+    -- LED logic (with hardcoded 5cm/10cm thresholds)
     process(clk)
         variable d1, d2, th : integer;
-        variable diff1, diff2 : integer;
+        variable dist_above_th1, dist_above_th2 : integer;
     begin
         if rising_edge(clk) then
             d1 := to_integer(unsigned(distance1));
             d2 := to_integer(unsigned(distance2));
             th := to_integer(unsigned(threshold));
-
-            diff1 := abs(d1 - th);
-            diff2 := abs(d2 - th);
-
+    
+            -- Left sensor LEDs (LED15-LED13)
             if d1 <= th then
-                leds_left <= "111";
-            elsif diff1 <= THRESHOLD_LEVEL1 then
+                leds_left <= "111";  -- Object <= threshold
+            elsif (d1 - th) <= 5 then  -- 0-5cm above threshold (replaces THRESHOLD_LEVEL1)
                 leds_left <= "110";
-            elsif diff1 <= THRESHOLD_LEVEL2 then
+            elsif (d1 - th) <= 10 then  -- 5-10cm above threshold (replaces THRESHOLD_LEVEL2)
                 leds_left <= "100";
             else
-                leds_left <= "000";
+                leds_left <= "000";  -- >10cm above threshold
             end if;
-
+    
+            -- Right sensor LEDs (LED2-LED0)
             if d2 <= th then
                 leds_right <= "111";
-            elsif diff2 <= THRESHOLD_LEVEL1 then
+            elsif (d2 - th) <= 5 then  -- 0-5cm above threshold
                 leds_right <= "011";
-            elsif diff2 <= THRESHOLD_LEVEL2 then
+            elsif (d2 - th) <= 10 then  -- 5-10cm above threshold
                 leds_right <= "001";
             else
-                leds_right <= "000";
+                leds_right <= "000";  -- >10cm above threshold
             end if;
         end if;
     end process;
@@ -166,14 +162,14 @@ begin
 
         case display_mode is
             when SHOW_ID =>
-                digits(2) <= "1101"; -- d
-                digits(1) <= "0000"; -- 0
-                digits(0) <= "0001"; -- 1
-                digits(3) <= "1111"; -- -
-                digits(4) <= "1111"; -- -
                 digits(7) <= "1101"; -- d
                 digits(6) <= "0000"; -- 0
-                digits(5) <= "0010"; -- 2
+                digits(5) <= "0001"; -- 1
+                digits(3) <= "1111"; -- -
+                digits(4) <= "1111"; -- -
+                digits(2) <= "1101"; -- d
+                digits(1) <= "0000"; -- 0
+                digits(0) <= "0010"; -- 2
 
             when SHOW_DISTANCES =>
                 digits(2) <= std_logic_vector(to_unsigned((d1 / 100) mod 10, 4));
