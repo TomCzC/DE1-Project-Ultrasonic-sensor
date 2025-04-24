@@ -24,14 +24,14 @@ Použité komponenty
 
 | Sloupec 1 | Sloupec 2 | Sloupec 3 |
 |-----------|-----------|-----------|
-| JA0       | Data 2    | Data 3    |
-| JC0       | Data 5    | Data 6    |
-| JD0       | Data 2    | Data 3    |
-| JB0       | Data 5    | Data 6    |
-| SW[8:0]   | Data 2    | Data 3    |
-| BTNU      | Tlačítko  | Reset     |
-| BTNC      | Data 5    | Zbrazení vzdálenosti    |
-| BTND      | Data 5    | Data 6    |
+| JA0       | Levý senzor    | Trigger (spouštěcí signál)   |
+| JC0       | Levý senzor    | 	Echo (návratový signál)    |
+| JD0       | Pravý senzor    | Trigger    |
+| JB0       | Pravý senzor    | Echo    |
+| SW[8:0]   | Přepínače | Data 3    |
+| BTNU      | Tlačítko  | Nastavení prahové hodnoty (0–511 cm)     |
+| BTNC      | Tlačítko  | Zbrazení vzdálenosti    |
+| BTND      | Tlačítko  | Zobrazit práh    |
 
 
 # Hardware design
