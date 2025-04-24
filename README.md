@@ -33,10 +33,24 @@ Použité komponenty
 | BTNC      | Tlačítko  | Zbrazení vzdálenosti    |
 | BTND      | Tlačítko  | Zobrazit práh    |
 
-
 # Hardware design
-![INOUT](https://github.com/user-attachments/assets/b8bc4688-fddc-4d11-9dc0-70a9965f4a90)
 
-![hardware](https://github.com/user-attachments/assets/9329ce82-92b5-4aab-9ac6-ef83b5c2c08e)
 
-![IMG_20250402_133631](https://github.com/user-attachments/assets/09d61c43-c357-4c93-ac26-ce2f540db133)
+# Funkce systému
+
+
+# Jak to funguje uvnitř?
+Hlavní soubory
+ - [top_level.vhd](src/top_level.vhd) – Propojuje všechny komponenty.
+ - [echo_receiver.vhd](src/echo_receiver.vhd) – Detekuje echo a počítá vzdálenost.
+ - [controller.vhd](src/controller.vhd) – Řídí měřicí cyklus a komunikaci se senzory.
+ - [trig_pulse.vhd](src/trig_pulse.vhd) – Generuje 10µs trigger pro HC-SR04.
+ - [display_control.vhd](src/display_control.vhd) – Ovládá displej a LED.
+Časování měření
+ - Každý senzor měří 1× za sekundu.
+ - Pokud není detekována ozvěna, systém automaticky pokračuje v další měřicí smyčce.
+
+
+
+
+
