@@ -1,5 +1,5 @@
 # Team members
-
+## 🧑💻 Team Members  
 Adam Čermák;
 Tomáš Běčák;
 Mykhailo Krasichkov;
@@ -13,6 +13,7 @@ Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senz
  - Nastavení prahové hodnoty pomocí přepínačů (SW)
  - Vizuální signalizaci pomocí LED diod
 Senzory pracují nezávisle – jeden měří vzdálenost vlevo, druhý vpravo.
+
 
 # Hardware
 
