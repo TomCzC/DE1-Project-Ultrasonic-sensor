@@ -5,7 +5,7 @@ Tomáš Běčák;
 Mykhailo Krasichkov;
 Daniel Kroužil
 
-# 📌 Abstract
+# Abstract
 
 Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senzorů HS-SR04, řízených FPGA. Systém umožňuje:
  - Měření vzdálenosti v rozsahu 2–400 cm s rozlišením 1 cm
@@ -14,14 +14,13 @@ Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senz
  - Vizuální signalizaci pomocí LED diod
 Senzory pracují nezávisle – jeden měří vzdálenost vlevo, druhý vpravo.
 
-
-# 💻 Hardware
+# Hardware
 
 Použité komponenty
  - FPGA deska (Nexys A7-50T)
  - Ultrazvukové senzory HC-SR04 (2×)
 
-# 🛠️ Zapojení 
+# Zapojení 
 
 | Sloupec 1 | Sloupec 2 | Sloupec 3 |
 |-----------|-----------|-----------|
@@ -68,7 +67,7 @@ Hlavní soubory
 
 
 # Ultrasonic Distance Measurement System  
-**Brno University of Technology, Faculty of Electrical Engineering, 2023/2024**  
+**Brno University of Technology, Faculty of Electrical Engineering, 2024/2025**  
 
 ---
 
