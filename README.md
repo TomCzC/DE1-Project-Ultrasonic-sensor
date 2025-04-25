@@ -1,11 +1,11 @@
-#  členové týmu
+##  členové týmu
 
  - Adam Čermák - Odpovědný za controller a poster
  - Tomáš Běčák - Odpovědný za Github a display_control
  - Mykhailo Krasichkov - Odpovědný za echo_detect, trig_pulse a zapojení na desce
  - Daniel Kroužil - Odpovědný za controller a poster
 
-# Abstract
+## Abstract
 
 Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senzorů HS-SR04, řízených FPGA. Systém umožňuje:
  - Měření vzdálenosti v rozsahu 2–400 cm s rozlišením 1 cm
@@ -14,13 +14,13 @@ Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senz
  - Vizuální signalizaci pomocí LED diod
 Senzory pracují nezávisle – jeden měří vzdálenost vlevo, druhý vpravo.
 
-# Hardware
+## Hardware
 
 Použité komponenty
  - FPGA deska (Nexys A7-50T)
  - Ultrazvukové senzory HC-SR04 (2×)
 
-# Zapojení 
+## Zapojení 
 
 | Sloupec 1 | Sloupec 2 | Sloupec 3 |
 |-----------|-----------|-----------|
@@ -33,10 +33,10 @@ Použité komponenty
 | BTNC      | Tlačítko  | Zbrazení vzdálenosti    |
 | BTND      | Tlačítko  | Zobrazit práh    |
 
-# Hardware design
+## Hardware design
 <img src="images/top_level (1).jpg" alt="top level block diagram" width="1000"/>
 
-# Funkce systému
+## Funkce systému
 1. Měření vzdálenosti
  - Každý senzor periodicky vysílá ultrazvukový impuls (10 µs).
  - Čas mezi vysláním a přijetím ozvěny (echo) určuje vzdálenost.
@@ -53,7 +53,7 @@ Levé LED (LED15-LED13): Indikují blízkost levého senzoru.
    - 000 = Více než +10 cm
  - Pravé LED (LED2-LED0): Stejná logika pro pravý senzor.
 
-# Jak to funguje uvnitř?
+## Jak to funguje uvnitř?
 Hlavní soubory
  - [top_level.vhd](project_files/top_level.vhd) – Tento hlavní 'top' modul propojuje všechny komponenty.
  - [echo_receiver.vhd](project_files/echo_receiver.vhd) – Tento modul slouží k měření vzdálenosti na základě doby trvání signálu echo_in, přičemž po obdržení impulsu trig začne počítat počet hodinových cyklů během logické jedničky na echo_in, převede je na centimetry pomocí konstanty ONE_CM a výsledek poskytne na výstupu distance spolu s indikací platnosti měření pomocí signálu status.
@@ -65,10 +65,9 @@ Hlavní soubory
 Časování měření
  - Každý senzor měří 1× za sekundu.
 
-
-
-# Ultrasonic Distance Measurement System  
-**Brno University of Technology, Faculty of Electrical Engineering, 2024/2025**  
+---
+    
+**Vysoké učení technické v Brně, Fakulta elektrotechniky a komunikačních technologií, Ústav radioelektroniky, 2024/2025**  
 
 ---
 
@@ -166,7 +165,13 @@ A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, feat
 - [controller.vhd](project_files/controller.vhd)  
 - [trig_pulse.vhd](project_files/trig_pulse.vhd)  
 - [display_control.vhd](project_files/display_control.vhd)  
- - Pokud není detekována ozvěna, systém automaticky pokračuje v další měřicí smyčce.
+
+---
+    
+**Brno University of Technology, Faculty of Electrical Engineering and Communication, Department of Radio Electronics, 2024/2025**  
+
+---
+
 
 
 
