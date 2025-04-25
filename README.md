@@ -72,10 +72,10 @@ Hlavní soubory
 ---
 
 ## 🧑💻 Team Members  
-- Adam Čermák  
-- Tomáš Běčák  
-- Mykhailo Krasichkov  
-- Daniel Kroužil
+- Adam Čermák (prompt ideas for AI)
+- Tomáš Běčák (prompt ideas for AI, schematic)
+- Mykhailo Krasichkov (prompt ideas for AI, schematic)
+- Daniel Kroužil (prompt ideas for AI)
 - ChatGPT/DeepSeek (all) 
 
 ---
