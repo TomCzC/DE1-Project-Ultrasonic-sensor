@@ -72,7 +72,11 @@ begin
                         distance_out <= distance_reg;
                         valid <= '1';
                         -- Compare to external threshold (SW inputs)
-                        thd <= '1' when (unsigned(distance_reg) < unsigned(threshold)) else '0';
+                        if (unsigned(distance_reg) < unsigned(threshold)) then
+                            thd <= '1';
+                        else
+                            thd <= '0';
+                        end if;
                         state <= IDLE;
                         counter <= (others => '0');
                         
