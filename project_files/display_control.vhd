@@ -172,14 +172,14 @@ begin
                 digits(0) <= "0010"; -- 2
 
             when SHOW_DISTANCES =>
-                digits(2) <= std_logic_vector(to_unsigned((d1 / 100) mod 10, 4));
-                digits(1) <= std_logic_vector(to_unsigned((d1 / 10) mod 10, 4));
-                digits(0) <= std_logic_vector(to_unsigned(d1 mod 10, 4));
+                digits(7) <= std_logic_vector(to_unsigned((d1 / 100) mod 10, 4));
+                digits(6) <= std_logic_vector(to_unsigned((d1 / 10) mod 10, 4));
+                digits(5) <= std_logic_vector(to_unsigned(d1 mod 10, 4));
                 digits(3) <= "1111";
                 digits(4) <= "1111";
-                digits(7) <= std_logic_vector(to_unsigned((d2 / 100) mod 10, 4));
-                digits(6) <= std_logic_vector(to_unsigned((d2 / 10) mod 10, 4));
-                digits(5) <= std_logic_vector(to_unsigned(d2 mod 10, 4));
+                digits(2) <= std_logic_vector(to_unsigned((d2 / 100) mod 10, 4));
+                digits(1) <= std_logic_vector(to_unsigned((d2 / 10) mod 10, 4));
+                digits(0) <= std_logic_vector(to_unsigned(d2 mod 10, 4));
 
             when SHOW_THRESHOLD =>
                 digits(0) <= "1111";
