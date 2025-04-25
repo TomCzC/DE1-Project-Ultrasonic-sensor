@@ -1,9 +1,9 @@
 #  Team members
 
-Adam Čermák;
-Tomáš Běčák;
-Mykhailo Krasichkov;
-Daniel Kroužil
+ - Adam Čermák - Odpovědný za controller a poster
+ - Tomáš Běčák - Odpovědný za Github a display_control
+ - Mykhailo Krasichkov - Odpovědný za echo_detect, trig_pulse a zapojení na desce
+ - Daniel Kroužil - Odpovědný za controller a poster
 
 # Abstract
 
@@ -57,6 +57,7 @@ Levé LED (LED15-LED13): Indikují blízkost levého senzoru.
 Hlavní soubory
  - [top_level.vhd](project_files/top_level.vhd) – Propojuje všechny komponenty.
  - [echo_receiver.vhd](project_files/echo_receiver.vhd) – Detekuje echo a počítá vzdálenost.
+   - Při psaní echo_receiver jsme se inspirovali projektem z minulého roku.   
  - [controller.vhd](project_files/controller.vhd) – Řídí měřicí cyklus a komunikaci se senzory.
  - [trig_pulse.vhd](project_files/trig_pulse.vhd) – Generuje 10µs trigger pro HC-SR04.
  - [display_control.vhd](project_files/display_control.vhd) – Ovládá displej a LED.
@@ -71,12 +72,6 @@ Hlavní soubory
 
 ---
 
-## 🧑💻 Team Members  
-- Adam Čermák (prompt ideas for AI)
-- Tomáš Běčák (prompt ideas for AI, schematic)
-- Mykhailo Krasichkov (prompt ideas for AI, schematic)
-- Daniel Kroužil (prompt ideas for AI)
-- ChatGPT/DeepSeek (all) 
 
 ---
 
