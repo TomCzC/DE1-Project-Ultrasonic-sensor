@@ -24,8 +24,8 @@ Použité komponenty
 
 | Sloupec 1 | Sloupec 2 | Sloupec 3 |
 |-----------|-----------|-----------|
-| JA0       | Levý senzor    | Trigger (spouštěcí signál)   |
-| JC0       | Levý senzor    | 	Echo (návratový signál)    |
+| JA0       | Levý senzor    | Trigger    |
+| JC0       | Levý senzor    | 	Echo     |
 | JD0       | Pravý senzor    | Trigger    |
 | JB0       | Pravý senzor    | Echo    |
 | SW[8:0]   | Přepínače | Data 3    |
