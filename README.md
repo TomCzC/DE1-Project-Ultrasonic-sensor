@@ -96,7 +96,6 @@ A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, feat
   - Threshold set via **9-bit DIP switches (SW[8:0])** (0–511 cm).  
   - Buttons to toggle display modes.  
 
----
 
 ## 🛠️ Hardware Setup  
 ### Key Components  
@@ -118,7 +117,6 @@ A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, feat
 ![Top-Level Block Diagram](images/top_level_(1).jpg)  
 *Hardware architecture overview.*  
 
----
 
 ## ⚙️ System Features  
 ### 1. Distance Measurement  
@@ -141,7 +139,6 @@ A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, feat
   - `000` = **>10 cm above threshold**.  
 - **Right LEDs (LED2-LED0)**: Same logic for the right sensor.  
 
----
 
 ## 🔍 Internal Workflow  
 ### Core Components  
