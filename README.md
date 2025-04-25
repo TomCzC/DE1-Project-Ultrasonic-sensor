@@ -75,7 +75,8 @@ Hlavní soubory
 - Adam Čermák  
 - Tomáš Běčák  
 - Mykhailo Krasichkov  
-- Daniel Kroužil  
+- Daniel Kroužil
+- ChatGPT/DeepSeek (all) 
 
 ---
 
