@@ -114,7 +114,7 @@ A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, feat
 | `BTNC`       | Button             | Show Distances     |  
 | `BTND`       | Button             | Show Threshold     |  
 
-![Top-Level Block Diagram](images/top_level_(1).jpg)  
+![Top-Level Block Diagram](images/top_level (1).jpg)  
 *Hardware architecture overview.*  
 
 
