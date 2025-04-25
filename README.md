@@ -1,11 +1,11 @@
-# Team members
-## 🧑💻 Team Members  
+#  Team members
+
 Adam Čermák;
 Tomáš Běčák;
 Mykhailo Krasichkov;
 Daniel Kroužil
 
-# Abstract
+# 📌 Abstract
 
 Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senzorů HS-SR04, řízených FPGA. Systém umožňuje:
  - Měření vzdálenosti v rozsahu 2–400 cm s rozlišením 1 cm
@@ -15,13 +15,13 @@ Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senz
 Senzory pracují nezávisle – jeden měří vzdálenost vlevo, druhý vpravo.
 
 
-# Hardware
+# 💻 Hardware
 
 Použité komponenty
  - FPGA deska (Nexys A7-50T)
  - Ultrazvukové senzory HC-SR04 (2×)
 
-# Zapojení 
+# 🛠️ Zapojení 
 
 | Sloupec 1 | Sloupec 2 | Sloupec 3 |
 |-----------|-----------|-----------|
@@ -64,6 +64,101 @@ Hlavní soubory
 
 Časování měření
  - Každý senzor měří 1× za sekundu.
+
+
+
+# Ultrasonic Distance Measurement System  
+**Brno University of Technology, Faculty of Electrical Engineering, 2023/2024**  
+
+---
+
+## 🧑💻 Team Members  
+- Adam Čermák  
+- Tomáš Běčák  
+- Mykhailo Krasichkov  
+- Daniel Kroužil  
+
+---
+
+## 📌 Abstract  
+A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, featuring:  
+- **Distance Measurement**:  
+  - Range: **2–400 cm** with **1 cm resolution**.  
+  - Dual independent sensors (left/right).  
+- **Dynamic Visualization**:  
+  - 7-segment display for real-time distance/threshold values.  
+  - LED indicators for proximity zones relative to a user-defined threshold.  
+- **User Interaction**:  
+  - Threshold set via **9-bit DIP switches (SW[8:0])** (0–511 cm).  
+  - Buttons to toggle display modes.  
+
+---
+
+## 🛠️ Hardware Setup  
+### Key Components  
+- **FPGA Board**: Nexys A7-50T (central control unit).  
+- **Sensors**: 2× HC-SR04 ultrasonic modules.  
+
+### Pin Connections  
+| **FPGA Pin** | **Component**      | **Function**       |  
+|--------------|--------------------|--------------------|  
+| `JA0`        | Left Sensor        | Trigger            |  
+| `JC0`        | Left Sensor        | Echo               |  
+| `JD0`        | Right Sensor       | Trigger            |  
+| `JB0`        | Right Sensor       | Echo               |  
+| `SW[8:0]`    | DIP Switches       | Threshold Setting  |  
+| `BTNU`       | Button             | System Reset       |  
+| `BTNC`       | Button             | Show Distances     |  
+| `BTND`       | Button             | Show Threshold     |  
+
+![Top-Level Block Diagram](images/top_level_(1).jpg)  
+*Hardware architecture overview.*  
+
+---
+
+## ⚙️ System Features  
+### 1. Distance Measurement  
+- **Trigger Pulse**: 10 µs pulse sent periodically to sensors.  
+- **Echo Processing**:  
+  - Distance calculated from echo pulse duration.  
+  - **Timeout Handling**: Returns 511 cm if no echo detected (object out of range).  
+
+### 2. Display Modes  
+- **Default**: Shows sensor IDs (`d01---d02`).  
+- **Button Controls**:  
+  - `BTNC`: Displays left/right distances (e.g., `200---300`).  
+  - `BTND`: Shows threshold value set via switches.  
+
+### 3. LED Proximity Indicators  
+- **Left LEDs (LED15-LED13)**:  
+  - `111` = **Below threshold**.  
+  - `110` = **≤5 cm above threshold**.  
+  - `100` = **≤10 cm above threshold**.  
+  - `000` = **>10 cm above threshold**.  
+- **Right LEDs (LED2-LED0)**: Same logic for the right sensor.  
+
+---
+
+## 🔍 Internal Workflow  
+### Core Components  
+- **`top_level.vhd`**: Integrates all modules.  
+- **`echo_receiver.vhd`**: Measures echo pulse width → calculates distance.  
+- **`controller.vhd`**: Manages sensor timing (trigger, timeout, data validation).  
+- **`trig_pulse.vhd`**: Generates precise 10 µs trigger pulses.  
+- **`display_control.vhd`**: Drives the 7-segment display and LEDs.  
+
+### Timing  
+- **Measurement Interval**: Each sensor updates **once per second**.  
+- **Debounced Buttons**: Ensure stable mode switching.  
+
+---
+
+## 📂 Source Files  
+- [top_level.vhd](project_files/top_level.vhd)  
+- [echo_receiver.vhd](project_files/echo_receiver.vhd)  
+- [controller.vhd](project_files/controller.vhd)  
+- [trig_pulse.vhd](project_files/trig_pulse.vhd)  
+- [display_control.vhd](project_files/display_control.vhd)  
  - Pokud není detekována ozvěna, systém automaticky pokračuje v další měřicí smyčce.
 
 
