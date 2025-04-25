@@ -12,20 +12,18 @@ entity controller is
         trigger_out  : out STD_LOGIC;
         distance_out : out STD_LOGIC_VECTOR(8 downto 0);
         valid        : out STD_LOGIC;
-        thd          : out STD_LOGIC
+        thd          : out STD_LOGIC;
+        threshold    : in  STD_LOGIC_VECTOR(8 downto 0)  -- Added threshold input
     );
 end controller;
 
 architecture Behavioral of controller is
-    -- Timing constants
     constant TRIGGER_PULSE_WIDTH : integer := 1000;  -- 10µs at 100MHz
     constant MEASUREMENT_INTERVAL : integer := 100_000_000;  -- 1 second
     
-    -- State machine
     type state_type is (IDLE, SEND_TRIGGER, WAIT_ECHO, PROCESS_DATA);
     signal state : state_type := IDLE;
     
-    -- Internal signals
     signal counter : unsigned(31 downto 0) := (others => '0');
     signal distance_reg : STD_LOGIC_VECTOR(8 downto 0) := (others => '0');
     signal trigger_active : std_logic := '0';
@@ -35,7 +33,6 @@ begin
     begin
         if rising_edge(clk) then
             if reset = '1' then
-                -- Reset all signals
                 state <= IDLE;
                 trigger_out <= '0';
                 valid <= '0';
@@ -45,13 +42,10 @@ begin
                 distance_reg <= (others => '0');
                 trigger_active <= '0';
             else
-                -- Default outputs
-                valid <= '0';
-                thd <= '0';
-                
                 case state is
                     when IDLE =>
-                        -- Wait for measurement interval
+                        trigger_out <= '0';
+                        valid <= '0';
                         if counter >= MEASUREMENT_INTERVAL-1 then
                             counter <= (others => '0');
                             state <= SEND_TRIGGER;
@@ -60,22 +54,12 @@ begin
                         end if;
                         
                     when SEND_TRIGGER =>
-                        -- Generate 10µs trigger pulse
                         trigger_out <= '1';
-                        trigger_active <= '1';
-                        counter <= (others => '0');
                         state <= WAIT_ECHO;
+                        counter <= (others => '0');
                         
                     when WAIT_ECHO =>
-                        -- End trigger pulse after 10µs
-                        if counter >= TRIGGER_PULSE_WIDTH-1 then
-                            trigger_out <= '0';
-                            trigger_active <= '0';
-                        else
-                            counter <= counter + 1;
-                        end if;
-                        
-                        -- Wait for echo response
+                        trigger_out <= '0';
                         if timeout = '1' then
                             distance_reg <= (others => '1');  -- Max distance on timeout
                             state <= PROCESS_DATA;
@@ -85,14 +69,10 @@ begin
                         end if;
                         
                     when PROCESS_DATA =>
-                        -- Output the measured distance
                         distance_out <= distance_reg;
                         valid <= '1';
-                        
-                        -- Set threshold alert (thd) based on echo_receiver's status
-                        thd <= '1' when (data_ready = '1' and unsigned(distance_reg) < unsigned(distance_in)) else '0';
-                        
-                        -- Prepare for next measurement
+                        -- Compare to external threshold (SW inputs)
+                        thd <= '1' when (unsigned(distance_reg) < unsigned(threshold)) else '0';
                         state <= IDLE;
                         counter <= (others => '0');
                         
