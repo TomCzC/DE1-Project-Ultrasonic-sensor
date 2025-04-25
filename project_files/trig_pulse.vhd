@@ -4,7 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity trig_pulse is
     generic (
-        PULSE_WIDTH : positive := 1000  -- Default 10µs pulse at 100MHz clock
+        PULSE_WIDTH : positive := 1000  -- Default 10Âµs pulse at 100MHz clock
     );
     port (
         clk      : in  STD_LOGIC;
