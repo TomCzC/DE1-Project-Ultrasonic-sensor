@@ -124,9 +124,9 @@ A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, feat
   - **Timeout Handling**: Returns 511 cm if no echo detected (object out of range).  
 
 ### 2. Display Modes  
-- **Default**: Shows sensor IDs (`d01---d02`).  
+- **Default**: Shows sensor IDs (`d01--d02`).  
 - **Button Controls**:  
-  - `BTNC`: Displays left/right distances (e.g., `200---300`).  
+  - `BTNC`: Displays left/right distances (e.g., `200--300`).  
   - `BTND`: Shows threshold value set via switches.  
 
 ### 3. LED Proximity Indicators  
