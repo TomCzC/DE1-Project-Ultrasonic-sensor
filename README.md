@@ -1,4 +1,4 @@
-#  Team members
+#  členové týmu
 
  - Adam Čermák - Odpovědný za controller a poster
  - Tomáš Běčák - Odpovědný za Github a display_control
@@ -55,12 +55,12 @@ Levé LED (LED15-LED13): Indikují blízkost levého senzoru.
 
 # Jak to funguje uvnitř?
 Hlavní soubory
- - [top_level.vhd](project_files/top_level.vhd) – Propojuje všechny komponenty.
- - [echo_receiver.vhd](project_files/echo_receiver.vhd) – Detekuje echo a počítá vzdálenost.
-   - Při psaní echo_receiver jsme se inspirovali projektem z minulého roku.   
- - [controller.vhd](project_files/controller.vhd) – Řídí měřicí cyklus a komunikaci se senzory.
- - [trig_pulse.vhd](project_files/trig_pulse.vhd) – Generuje 10µs trigger pro HC-SR04.
- - [display_control.vhd](project_files/display_control.vhd) – Ovládá displej a LED.
+ - [top_level.vhd](project_files/top_level.vhd) – Tento hlavní 'top' modul propojuje všechny komponenty.
+ - [echo_receiver.vhd](project_files/echo_receiver.vhd) – Tento modul slouží k měření vzdálenosti na základě doby trvání signálu echo_in, přičemž po obdržení impulsu trig začne počítat počet hodinových cyklů během logické jedničky na echo_in, převede je na centimetry pomocí konstanty ONE_CM a výsledek poskytne na výstupu distance spolu s indikací platnosti měření pomocí signálu status.
+   - Při psaní echo_receiver jsme se inspirovali projektem z minulého roku. Náš echo_receiver má oproti loňské verzi lepší synchronizaci vstupu echo_in, přesnější řízení měření pomocí stavového automatu a vyšší odolnost proti rušení. Navíc detekuje náběžnou hranu signálu trig a pracuje stabilněji při vysokých hodinových frekvencích.  
+ - [controller.vhd](project_files/controller.vhd) – Tento modul implementuje řídicí jednotku, která periodicky generuje trigger pulz pro měření vzdálenosti, čeká na echo nebo timeout, zpracuje přijatá data a vyhodnocuje, zda naměřená vzdálenost překročila nastavený práh.
+ - [trig_pulse.vhd](project_files/trig_pulse.vhd) – Tento modul generuje pulz šířky PULSE_WIDTH (v taktech hodin) na výstupu trig_out, když dostane impuls na vstupu start. Používá synchronní reset rst. Při 100 MHz hodinách a PULSE_WIDTH := 1000 vytvoří pulz o délce 10 µs.
+ - [display_control.vhd](project_files/display_control.vhd) – Tento modul implementuje systém řízení sedmisegmentového displeje, který podle tlačítek přepíná mezi zobrazením ID („d01--d02“), vzdáleností ze dvou senzorů a aktuální prahovou hodnotou, přičemž zároveň indikuje vzdálenost vůči prahu pomocí LED.
 
 Časování měření
  - Každý senzor měří 1× za sekundu.
@@ -74,6 +74,16 @@ Hlavní soubory
 
 
 ---
+
+# English version
+
+## Team members
+
+ - Adam Čermák - Responsible for controller a poster
+ - Tomáš Běčák - Responsible for Github a display_control
+ - Mykhailo Krasichkov - Responsible for echo_detect, trig_pulse and sensor connection to the FPGA board.
+ - Daniel Kroužil - Responsible for controller a poster
+
 
 ## 📌 Abstract  
 A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, featuring:  
@@ -136,11 +146,13 @@ A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, feat
 
 ## 🔍 Internal Workflow  
 ### Core Components  
-- **`top_level.vhd`**: Integrates all modules.  
-- **`echo_receiver.vhd`**: Measures echo pulse width → calculates distance.  
-- **`controller.vhd`**: Manages sensor timing (trigger, timeout, data validation).  
-- **`trig_pulse.vhd`**: Generates precise 10 µs trigger pulses.  
-- **`display_control.vhd`**: Drives the 7-segment display and LEDs.  
+ - [top_level.vhd](project_files/top_level.vhd) – This main 'top' module connects all components.
+ - [echo_receiver.vhd](project_files/echo_receiver.vhd) – This module is used for measuring distance based on the duration of the echo_in signal. After receiving a trig pulse, it starts counting the number of clock cycles while echo_in is at logic high, converts them into centimeters using the ONE_CM constant, and provides the result on the distance output along with a validity indication using the status signal.  
+   - When writing echo_receiver, we were inspired by a project from last year. Our echo_receiver has improved input synchronization for echo_in compared to the previous version, more accurate measurement control using a state machine, and higher noise immunity. Additionally, it detects the rising edge of the trig signal and works more reliably at high clock frequencies.  
+ - [controller.vhd](project_files/controller.vhd) – This module implements the control unit, which periodically generates a trigger pulse for distance measurement, waits for an echo or timeout, processes the received data, and evaluates whether the measured distance has exceeded the set threshold.
+ - [trig_pulse.vhd](project_files/trig_pulse.vhd) – This module generates a pulse of width PULSE_WIDTH (in clock cycles) on the trig_out output when it receives a pulse on the start input. It uses a synchronous reset rst. With a 100 MHz clock and PULSE_WIDTH := 1000, it produces a pulse of 10 µs length.
+ - [display_control.vhd](project_files/display_control.vhd) – This module implements the seven-segment display control system, which switches between displaying the ID ("d01--d02"), the distance from two sensors, and the current threshold value based on buttons, while also indicating the distance relative to the threshold using LEDs.
+
 
 ### Timing  
 - **Measurement Interval**: Each sensor updates **once per second**.  
