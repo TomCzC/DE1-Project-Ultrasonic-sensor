@@ -17,20 +17,25 @@ entity controller is
 end controller;
 
 architecture Behavioral of controller is
-    constant MEASUREMENT_INTERVAL : integer := 100_000_000; -- 1 second
-    constant ALARM_THRESHOLD : integer := 100; -- 100 cm
+    -- Timing constants
+    constant TRIGGER_PULSE_WIDTH : integer := 1000;  -- 10µs at 100MHz
+    constant MEASUREMENT_INTERVAL : integer := 100_000_000;  -- 1 second
     
+    -- State machine
     type state_type is (IDLE, SEND_TRIGGER, WAIT_ECHO, PROCESS_DATA);
-    signal state : state_type;
-    signal counter : unsigned(31 downto 0);
-    signal distance_reg : STD_LOGIC_VECTOR(8 downto 0);
-    signal alarm : std_logic;
+    signal state : state_type := IDLE;
+    
+    -- Internal signals
+    signal counter : unsigned(31 downto 0) := (others => '0');
+    signal distance_reg : STD_LOGIC_VECTOR(8 downto 0) := (others => '0');
+    signal trigger_active : std_logic := '0';
     
 begin
     process(clk)
     begin
         if rising_edge(clk) then
             if reset = '1' then
+                -- Reset all signals
                 state <= IDLE;
                 trigger_out <= '0';
                 valid <= '0';
@@ -38,12 +43,15 @@ begin
                 distance_out <= (others => '0');
                 counter <= (others => '0');
                 distance_reg <= (others => '0');
-                alarm <= '0';
+                trigger_active <= '0';
             else
+                -- Default outputs
+                valid <= '0';
+                thd <= '0';
+                
                 case state is
                     when IDLE =>
-                        trigger_out <= '0';
-                        valid <= '0';
+                        -- Wait for measurement interval
                         if counter >= MEASUREMENT_INTERVAL-1 then
                             counter <= (others => '0');
                             state <= SEND_TRIGGER;
@@ -52,13 +60,24 @@ begin
                         end if;
                         
                     when SEND_TRIGGER =>
+                        -- Generate 10µs trigger pulse
                         trigger_out <= '1';
+                        trigger_active <= '1';
+                        counter <= (others => '0');
                         state <= WAIT_ECHO;
                         
                     when WAIT_ECHO =>
-                        trigger_out <= '0';
+                        -- End trigger pulse after 10µs
+                        if counter >= TRIGGER_PULSE_WIDTH-1 then
+                            trigger_out <= '0';
+                            trigger_active <= '0';
+                        else
+                            counter <= counter + 1;
+                        end if;
+                        
+                        -- Wait for echo response
                         if timeout = '1' then
-                            distance_reg <= (others => '1'); -- Max distance
+                            distance_reg <= (others => '1');  -- Max distance on timeout
                             state <= PROCESS_DATA;
                         elsif data_ready = '1' then
                             distance_reg <= distance_in;
@@ -66,16 +85,19 @@ begin
                         end if;
                         
                     when PROCESS_DATA =>
+                        -- Output the measured distance
                         distance_out <= distance_reg;
                         valid <= '1';
-                        if unsigned(distance_reg) < ALARM_THRESHOLD then
-                            alarm <= '1';
-                        else
-                            alarm <= '0';
-                        end if;
-                        thd <= alarm;
+                        
+                        -- Set threshold alert (thd) based on echo_receiver's status
+                        thd <= '1' when (data_ready = '1' and unsigned(distance_reg) < unsigned(distance_in)) else '0';
+                        
+                        -- Prepare for next measurement
                         state <= IDLE;
                         counter <= (others => '0');
+                        
+                    when others =>
+                        state <= IDLE;
                 end case;
             end if;
         end if;
