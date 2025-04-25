@@ -4,14 +4,14 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity echo_receiver is
     generic (
-        MIN_DISTANCE : INTEGER := 10 
+        MIN_DISTANCE : INTEGER := 10  -- Standardized to 10 cm
     );
     port ( 
         trig      : in  STD_LOGIC;
         echo_in   : in  STD_LOGIC;
         clk       : in  STD_LOGIC;
         rst       : in  STD_LOGIC;
-        distance  : out STD_LOGIC_VECTOR(8 downto 0); -- Distance in cm (0-400)
+        distance  : out STD_LOGIC_VECTOR(8 downto 0);
         status    : out STD_LOGIC 
     );
 end echo_receiver;
@@ -26,16 +26,16 @@ architecture Behavioral of echo_receiver is
 begin  
     getDistance : process(clk, trig, echo_in)
     begin
-        if (trig = '1') then -- Trigger pulse received
+        if (trig = '1') then
             sig_prepare <= '1';
         end if;
         
-        if (sig_prepare = '1' and echo_in = '1') then -- Echo pulse started
+        if (sig_prepare = '1' and echo_in = '1') then
             sig_count_enable <= '1';
         end if;        
         
         if rising_edge(clk) then
-            if rst = '1' then -- Reset
+            if rst = '1' then
                 sig_prepare <= '0';
                 sig_count_enable <= '0';
                 sig_count <= 0;
@@ -44,17 +44,22 @@ begin
                 status <= '0';
                 
             elsif sig_count_enable = '1' then
-                if echo_in = '0' then -- Echo pulse ended
+                if echo_in = '0' then
                     distance <= std_logic_vector(to_unsigned(sig_result, 9));
                     sig_count_enable <= '0';
                     sig_prepare <= '0';
-                    status <= '0' when (sig_result < MIN_DISTANCE) else '1';
+                    -- Use MIN_DISTANCE (10 cm) for status
+                    if (sig_result < MIN_DISTANCE) then
+                        status <= '0';
+                    else
+                        status <= '1';
+                    end if;
                     sig_result <= 0;
                     sig_count <= 0;
                     
                 elsif echo_in = '1' and sig_count = ONE_CM then
                     if sig_result < 400 then
-                        sig_result <= sig_result + 1; -- Increment cm counter
+                        sig_result <= sig_result + 1;
                     end if;
                     sig_count <= 0;
                 else
