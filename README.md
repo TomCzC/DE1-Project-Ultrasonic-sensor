@@ -7,7 +7,7 @@
  - Mykhailo Krasichkov - Odpovědný za echo_detect, trig_pulse a zapojení na desce
  - Daniel Kroužil - Odpovědný za controller a poster
 
-## Abstract
+## Popis projektu
 
 Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senzorů HS-SR04, řízených FPGA. Systém umožňuje:
  - Měření vzdálenosti v rozsahu 2–400 cm s rozlišením 1 cm
