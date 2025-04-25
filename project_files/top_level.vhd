@@ -95,12 +95,14 @@ architecture Behavioral of top_level is
     signal left_distance_processed: std_logic_vector(8 downto 0);
     signal left_ready, left_valid, left_thd : std_logic;
     signal left_trigger_start     : std_logic;
+    signal left_trigger_internal  : std_logic;  -- Added internal trigger signal
     
     -- Right sensor signals
     signal right_distance_raw      : std_logic_vector(8 downto 0);
     signal right_distance_processed: std_logic_vector(8 downto 0);
     signal right_ready, right_valid, right_thd : std_logic;
     signal right_trigger_start     : std_logic;
+    signal right_trigger_internal  : std_logic;  -- Added internal trigger signal
     
     -- Display signals
     signal seg_data : std_logic_vector(6 downto 0);
@@ -109,6 +111,10 @@ architecture Behavioral of top_level is
 begin
     reset <= BTNU;
     
+    -- Connect internal trigger signals to output ports
+    JA0 <= left_trigger_internal;
+    JD0 <= right_trigger_internal;
+    
     -- Left sensor processing chain
     left_trigger: trig_pulse
         generic map (PULSE_WIDTH => 1000)  -- 10µs pulse
@@ -116,13 +122,13 @@ begin
             clk      => CLK100MHZ,
             rst      => reset,
             start    => left_trigger_start,
-            trig_out => JA0
+            trig_out => left_trigger_internal  -- Changed to internal signal
         );
     
     left_sensor: echo_receiver
         generic map (MIN_DISTANCE => 10)
         port map (
-            trig     => JA0,
+            trig     => left_trigger_internal,  -- Changed to internal signal
             echo_in  => JC0,
             clk      => CLK100MHZ,
             rst      => reset,
@@ -151,13 +157,13 @@ begin
             clk      => CLK100MHZ,
             rst      => reset,
             start    => right_trigger_start,
-            trig_out => JD0
+            trig_out => right_trigger_internal  -- Changed to internal signal
         );
     
     right_sensor: echo_receiver
         generic map (MIN_DISTANCE => 10)
         port map (
-            trig     => JD0,
+            trig     => right_trigger_internal,  -- Changed to internal signal
             echo_in  => JB0,
             clk      => CLK100MHZ,
             rst      => reset,
