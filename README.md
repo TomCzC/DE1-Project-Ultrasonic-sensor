@@ -62,7 +62,7 @@ Hlavní soubory
  - [trig_pulse.vhd](project_files/trig_pulse.vhd) – Tento modul generuje pulz šířky PULSE_WIDTH (v taktech hodin) na výstupu trig_out, když dostane impuls na vstupu start. Používá synchronní reset rst. Při 100 MHz hodinách a PULSE_WIDTH := 1000 vytvoří pulz o délce 10 µs.
  - [display_control.vhd](project_files/display_control.vhd) – Tento modul implementuje systém řízení sedmisegmentového displeje, který podle tlačítek přepíná mezi zobrazením ID („d01--d02“), vzdáleností ze dvou senzorů a aktuální prahovou hodnotou, přičemž zároveň indikuje vzdálenost vůči prahu pomocí LED.
 
-Časování měření
+### Časování měření
  - Každý senzor měří 1× za sekundu.
 
 ---
@@ -156,8 +156,6 @@ A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, feat
 ### Timing  
 - **Measurement Interval**: Each sensor updates **once per second**.  
 - **Debounced Buttons**: Ensure stable mode switching.  
-
----
 
 ## 📂 Source Files  
 - [top_level.vhd](project_files/top_level.vhd)  
