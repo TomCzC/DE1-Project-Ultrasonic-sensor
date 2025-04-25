@@ -10,9 +10,9 @@ entity top_level is
         JA0       : out STD_LOGIC;   -- Left sensor trigger               
         JB0       : in  STD_LOGIC;   -- Right sensor echo
         JD0       : out STD_LOGIC;   -- Right sensor trigger     
-        BTNU      : in  STD_LOGIC;   -- Reset (changed from BTNC)
-        BTNC      : in  STD_LOGIC;   -- Show data button (changed from BTND)
-        BTND      : in  STD_LOGIC;   -- Show threshold button (changed from BTNU)
+        BTNU      : in  STD_LOGIC;   -- Reset
+        BTNC      : in  STD_LOGIC;   -- Show data button
+        BTND      : in  STD_LOGIC;   -- Show threshold button
         LED       : out STD_LOGIC_VECTOR(15 downto 0);
         CA        : out STD_LOGIC;
         CB        : out STD_LOGIC;
@@ -29,7 +29,7 @@ end top_level;
 architecture Behavioral of top_level is
     component echo_receiver is
         generic (
-            MIN_DISTANCE : INTEGER := 50 
+            MIN_DISTANCE : INTEGER := 10  -- Changed to 10 cm
         );
         port ( 
             trig      : in  STD_LOGIC;
@@ -51,7 +51,8 @@ architecture Behavioral of top_level is
             trigger_out  : out STD_LOGIC;
             distance_out : out STD_LOGIC_VECTOR(8 downto 0);
             valid        : out STD_LOGIC;
-            thd          : out STD_LOGIC
+            thd          : out STD_LOGIC;
+            threshold    : in  STD_LOGIC_VECTOR(8 downto 0)  -- Added threshold input
         );
     end component;
     
@@ -102,7 +103,7 @@ begin
     
     -- Left sensor processing
     left_sensor: echo_receiver
-        generic map (MIN_DISTANCE => 50)
+        generic map (MIN_DISTANCE => 10)  -- Set to 10 cm
         port map (
             trig    => left_trigger_pulse,
             echo_in => JC0,
@@ -122,7 +123,8 @@ begin
             trigger_out => left_trigger_start,
             distance_out => left_distance_processed,
             valid       => left_valid,
-            thd         => left_thd
+            thd         => left_thd,
+            threshold   => SW  -- Pass threshold from switches
         );
     
     left_trigger: trig_pulse
@@ -132,9 +134,9 @@ begin
             trig  => left_trigger_pulse
         );
     
-    -- Right sensor processing
+    -- Right sensor processing (identical to left)
     right_sensor: echo_receiver
-        generic map (MIN_DISTANCE => 50)
+        generic map (MIN_DISTANCE => 10)  -- Set to 10 cm
         port map (
             trig    => right_trigger_pulse,
             echo_in => JB0,
@@ -154,7 +156,8 @@ begin
             trigger_out => right_trigger_start,
             distance_out => right_distance_processed,
             valid       => right_valid,
-            thd         => right_thd
+            thd         => right_thd,
+            threshold   => SW  -- Pass threshold from switches
         );
     
     right_trigger: trig_pulse
