@@ -4,7 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity echo_receiver is
     generic (
-        MIN_DISTANCE : INTEGER := 10  -- Standardized to 10 cm
+        MIN_DISTANCE : INTEGER := 10  -- 10 cm minimum distance
     );
     port ( 
         trig      : in  STD_LOGIC;
@@ -17,53 +17,63 @@ entity echo_receiver is
 end echo_receiver;
 
 architecture Behavioral of echo_receiver is
-    constant ONE_CM : INTEGER := 5827; -- Clock cycles per cm at 100MHz
-    signal sig_count     : INTEGER range 0 to ONE_CM + 1;
-    signal sig_result    : INTEGER range 0 to 401;
-    signal sig_prepare   : STD_LOGIC;
-    signal sig_count_enable : STD_LOGIC;
+    constant CLK_FREQ   : INTEGER := 100_000_000;  -- 100 MHz
+    constant SOUND_SPEED: INTEGER := 34300;        -- cm/s
+    constant ONE_CM     : INTEGER := (CLK_FREQ * 2) / SOUND_SPEED; -- Clock cycles per cm
     
-begin  
-    getDistance : process(clk, trig, echo_in)
+    signal echo_sync    : STD_LOGIC_VECTOR(2 downto 0) := (others => '0');
+    signal echo_clean   : STD_LOGIC := '0';
+    signal pulse_count  : INTEGER range 0 to ONE_CM * 400 + 1 := 0;
+    signal cm_count     : INTEGER range 0 to 400 := 0;
+    signal measuring    : STD_LOGIC := '0';
+    signal last_trig    : STD_LOGIC := '0';
+    
+begin
+    -- Enhanced echo processing with noise filtering
+    process(clk)
     begin
-        if (trig = '1') then
-            sig_prepare <= '1';
-        end if;
-        
-        if (sig_prepare = '1' and echo_in = '1') then
-            sig_count_enable <= '1';
-        end if;        
-        
         if rising_edge(clk) then
             if rst = '1' then
-                sig_prepare <= '0';
-                sig_count_enable <= '0';
-                sig_count <= 0;
-                sig_result <= 0;
+                pulse_count <= 0;
+                cm_count <= 0;
+                measuring <= '0';
                 distance <= (others => '0');
                 status <= '0';
+                echo_sync <= (others => '0');
+                echo_clean <= '0';
+            else
+                -- Synchronize and debounce echo input
+                echo_sync <= echo_sync(1 downto 0) & echo_in;
                 
-            elsif sig_count_enable = '1' then
-                if echo_in = '0' then
-                    distance <= std_logic_vector(to_unsigned(sig_result, 9));
-                    sig_count_enable <= '0';
-                    sig_prepare <= '0';
-                    -- Use MIN_DISTANCE (10 cm) for status
-                    if (sig_result < MIN_DISTANCE) then
-                        status <= '0';
-                    else
-                        status <= '1';
+                -- Edge detection for trigger
+                last_trig <= trig;
+                
+                -- Start measurement on rising edge of trigger
+                if trig = '1' and last_trig = '0' then
+                    measuring <= '1';
+                    pulse_count <= 0;
+                    cm_count <= 0;
+                    status <= '0';
+                end if;
+                
+                -- Distance measurement
+                if measuring = '1' then
+                    if echo_sync(2) = '1' then  -- Echo received
+                        if pulse_count < ONE_CM then
+                            pulse_count <= pulse_count + 1;
+                        else
+                            if cm_count < 400 then
+                                cm_count <= cm_count + 1;
+                            end if;
+                            pulse_count <= 0;
+                        end if;
+                    else                        -- Echo ended
+                        if cm_count > 0 then
+                            measuring <= '0';
+                            distance <= std_logic_vector(to_unsigned(cm_count, 9));
+                            status <= '1';
+                        end if;
                     end if;
-                    sig_result <= 0;
-                    sig_count <= 0;
-                    
-                elsif echo_in = '1' and sig_count = ONE_CM then
-                    if sig_result < 400 then
-                        sig_result <= sig_result + 1;
-                    end if;
-                    sig_count <= 0;
-                else
-                    sig_count <= sig_count + 1;
                 end if;
             end if;
         end if;
