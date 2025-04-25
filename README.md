@@ -34,7 +34,7 @@ Použité komponenty
 | BTND      | Tlačítko  | Zobrazit práh    |
 
 # Hardware design
-<img src="images/top_level.jpg" alt="Top level block diagram" width="600"/>
+<img src="images/top_level.jpg" alt="Top level block diagram" width="1000"/>
 
 # Funkce systému
 1. Měření vzdálenosti
