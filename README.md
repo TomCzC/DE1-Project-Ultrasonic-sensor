@@ -1,3 +1,5 @@
+# Řídicí systém pro ultrazvukové senzory parkovacího asistenta
+
 ##  členové týmu
 
  - Adam Čermák - Odpovědný za controller a poster
@@ -74,7 +76,7 @@ Hlavní soubory
 
 ---
 
-# English version
+# English version - Ultrasonic Sensor Controller for Parking Assist System
 
 ## Team members
 
