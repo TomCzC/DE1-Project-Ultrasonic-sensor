@@ -1,3 +1,9 @@
+---
+    
+**Vysoké učení technické v Brně, Fakulta elektrotechniky a komunikačních technologií, Ústav radioelektroniky, 2024/2025**  
+
+---
+
 # Řídicí systém pro ultrazvukové senzory parkovacího asistenta
 
 
@@ -68,11 +74,6 @@ Hlavní soubory
 ### Časování měření
  - Každý senzor měří 1× za sekundu.
 
----
-    
-**Vysoké učení technické v Brně, Fakulta elektrotechniky a komunikačních technologií, Ústav radioelektroniky, 2024/2025**  
-
----
 
 
 ---
