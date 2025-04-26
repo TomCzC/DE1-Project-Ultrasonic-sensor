@@ -1,5 +1,7 @@
 # Řídicí systém pro ultrazvukové senzory parkovacího asistenta
 
+https://github.com/user-attachments/assets/7492b9ca-e3cb-438e-8658-ee29e86bce07
+
 ##  členové týmu
 
  - Adam Čermák - Odpovědný za controller a poster
