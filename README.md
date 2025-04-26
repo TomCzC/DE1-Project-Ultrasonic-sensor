@@ -1,6 +1,4 @@
----
-    
-** Vysoké učení technické v Brně, Fakulta elektrotechniky a komunikačních technologií, Ústav radioelektroniky, 2024/2025 **  
+  ** Vysoké učení technické v Brně, Fakulta elektrotechniky a komunikačních technologií, Ústav radioelektroniky, 2024/2025 **  
 
 ---
 
