@@ -72,7 +72,7 @@ Hlavní soubory
 ### Časování měření
  - Každý senzor měří 1× za sekundu.
 
-
+![stavy](https://github.com/user-attachments/assets/8a4470cd-790a-4b2e-9de4-82cee64efdc9)
 
 ---
 
