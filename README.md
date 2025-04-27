@@ -85,7 +85,6 @@ Hlavní soubory
 <img src="images/stavy.jpg" alt="Button states" width="750"/>
 
 https://github.com/user-attachments/assets/559e6796-e8bb-4ae0-9059-a520a27b77e6
-<img src="images/video.mp4" alt="Measure" width="750"/>
 
 ---
 
