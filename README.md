@@ -33,7 +33,7 @@ Použité komponenty
 
 ## Zapojení 
 
-| Sloupec 1 | Sloupec 2      | Sloupec 3                                                       |
+| Pin       | Komponenta     | Funkce                                                          |
 |-----------|----------------|-----------------------------------------------------------------|
 | JA0       | Levý senzor    | Trigger                                                         |
 | JC0       | Levý senzor    | Echo                                                            |
