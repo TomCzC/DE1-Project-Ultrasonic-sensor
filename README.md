@@ -61,13 +61,14 @@ Použité komponenty
  - **Ovládání tlačítky:**
    - Stisk ```BTNC```: Zobrazí aktuální vzdálenosti v cm (levý a pravý senzor).
    - Stisk ```BTND```: Zobrazí nastavený práh (hodnota z přepínačů ```SW [8:0]```).
-3. Signalizace LED diodami
-Levé LED (LED15-LED13): Indikují blízkost levého senzoru.
-   - 111 = Pod prahem
-   - 110 = Do +5 cm nad prahem
-   - 100 = Do +10 cm nad prahem
-   - 000 = Více než +10 cm
- - Pravé LED (LED2-LED0): Stejná logika pro pravý senzor.
+
+**3. Signalizace LED diodami**
+ - **Levé LED (LED15-LED13):** Indikují blízkost levého senzoru.
+   - 111 = Vzdálenost **≤ práh**.
+   - 110 = Vzdálenost **≤ práh + 5 cm**.
+   - 100 = Vzdálenost **≤ práh + 10 cm**.
+   - 000 = Vzdálenost **> práh + 10 cm**.
+ - **Pravé LED (LED2-LED0):** Stejná logika pro pravý senzor.
 
 ## Jak to funguje uvnitř?
 Hlavní soubory
