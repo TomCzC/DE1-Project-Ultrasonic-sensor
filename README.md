@@ -26,6 +26,7 @@ Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senz
 Použité komponenty
  - FPGA deska (Nexys A7-50T)
  - Ultrazvukové senzory HC-SR04 (2×)
+ - Arduino UNO Digital R3 (2×)
 
 ## Zapojení 
 
@@ -105,7 +106,8 @@ A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, feat
 ## 🛠️ Hardware Setup  
 ### Key Components  
 - **FPGA Board**: Nexys A7-50T (central control unit).  
-- **Sensors**: 2× HC-SR04 ultrasonic modules.  
+- **Sensors**: 2× HC-SR04 ultrasonic modules.
+- Arduino UNO Digital R3 (2×)
 
 ### Pin Connections  
 | **FPGA Pin** | **Component**      | **Function**       |  
