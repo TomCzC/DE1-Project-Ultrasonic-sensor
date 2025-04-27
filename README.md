@@ -19,7 +19,7 @@ Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senz
  - Zobrazení hodnot na 7-segmentovém displeji
  - Nastavení prahové hodnoty pomocí přepínačů (SW)
  - Vizuální signalizaci pomocí LED diod
-Senzory pracují nezávisle – jeden měří vzdálenost vlevo, druhý vpravo.
+ - Senzory pracují nezávisle – jeden měří vzdálenost vlevo, druhý vpravo.
 
 ## Hardware
 
