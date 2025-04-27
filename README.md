@@ -53,7 +53,8 @@ Použité komponenty
    - Každý senzor periodicky vysílá **10 µs pulz** (generuje ```trig_pulse.vhd```).
    - Čas mezi vysláním a přijetím ozvěny (echo) určuje vzdálenost.
  - **Detekce překročení rozsahu:**
- - Pokud senzor nezachytí ozvěnu (objekt příliš daleko), systém detekuje timeout a vrátí maximální hodnotu (511 cm).
+   - Pokud je objekt příliš vzdálený a senzor nezachytí ozvěnu (echo se nevrátí do 250 ms (nastaveno v ```controller.vhd```)):
+     - Systém detekuje timeout a vrátí maximální hodnotu (511 cm).
 2. Zobrazení na 7-segmentovém displeji
  - Výchozí režim: Zobrazuje d01---d02 (identifikace senzorů).
  - Stisk BTNC: Zobrazí vzdálenosti v cm (levý a pravý senzor).
