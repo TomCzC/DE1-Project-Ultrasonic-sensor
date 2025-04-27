@@ -82,7 +82,7 @@ Hlavní soubory
 ### Časování měření
  - Každý senzor měří 1× za 0,5 s (50M cyklů při 100 MHz (viz controller.vhd)).
 
-![stavy](https://github.com/user-attachments/assets/8a4470cd-790a-4b2e-9de4-82cee64efdc9)
+<img src="images/stavy.jpg" alt="Button states" width="1000"/>
 
 https://github.com/user-attachments/assets/559e6796-e8bb-4ae0-9059-a520a27b77e6
 
