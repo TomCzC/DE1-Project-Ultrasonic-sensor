@@ -47,6 +47,7 @@ Použité komponenty
 ## Hardware design
 <img src="images/top_level (1).jpg" alt="top level block diagram" width="1000"/>
 ![top_level schematic](https://github.com/user-attachments/assets/5a9d928a-19b6-4f92-9996-8faee3875dff)
+<img src="images/top_level schematic.jpg" alt="top level block diagram" width="1000"/>
 
 ## Funkce systému
 **1. Měření vzdálenosti**
