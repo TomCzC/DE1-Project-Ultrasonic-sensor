@@ -31,7 +31,7 @@ Použité komponenty
  - Ultrazvukové senzory HC-SR04 (2×)
  - Arduino UNO Digital R3 (2×)
 
-## 📌 Zapojení 
+## 🎚️ Zapojení 
 
 | Pin       | Komponenta     | Funkce                                                          |
 |-----------|----------------|-----------------------------------------------------------------|
