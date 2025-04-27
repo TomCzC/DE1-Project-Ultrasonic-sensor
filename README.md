@@ -48,9 +48,11 @@ Použité komponenty
 <img src="images/top_level (1).jpg" alt="top level block diagram" width="1000"/>
 
 ## Funkce systému
-1. Měření vzdálenosti
- - Každý senzor periodicky vysílá ultrazvukový impuls (10 µs).
- - Čas mezi vysláním a přijetím ozvěny (echo) určuje vzdálenost.
+**1. Měření vzdálenosti**
+ - **Ultrazvukový impuls**
+   - Každý senzor periodicky vysílá **10 µs pulz** (generuje ```trig_pulse.vhd```).
+   - Čas mezi vysláním a přijetím ozvěny (echo) určuje vzdálenost.
+ - **Detekce překročení rozsahu:**
  - Pokud senzor nezachytí ozvěnu (objekt příliš daleko), systém detekuje timeout a vrátí maximální hodnotu (511 cm).
 2. Zobrazení na 7-segmentovém displeji
  - Výchozí režim: Zobrazuje d01---d02 (identifikace senzorů).
