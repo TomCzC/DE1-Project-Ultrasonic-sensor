@@ -15,6 +15,10 @@
 ## Popis projektu
 
 Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senzorů HS-SR04, řízených FPGA. Systém umožňuje:
+ - Měření vzdálenosti:
+   - Rozsah: **2-400 cm**
+   - Rozlišení: **1 cm** (výpočet v ```echo_receiver.vhd``` pomocí ```ONE_CM``` konstanty)
+ 
  - Měření vzdálenosti v rozsahu 2–400 cm s rozlišením 1 cm
  - Zobrazení hodnot na 7-segmentovém displeji
  - Nastavení prahové hodnoty pomocí přepínačů (SW)
