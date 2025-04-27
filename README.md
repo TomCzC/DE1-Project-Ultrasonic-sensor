@@ -27,7 +27,7 @@ Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senz
 ## Hardware
 
 Použité komponenty
- - FPGA deska (Nexys A7-50T)
+ - FPGA deska Nexys A7-50T
  - Ultrazvukové senzory HC-SR04 (2×)
  - Arduino UNO Digital R3 (2×)
 
