@@ -80,7 +80,7 @@ Hlavní soubory
  - [display_control.vhd](project_files/display_control.vhd) – Tento modul implementuje systém řízení sedmisegmentového displeje, který podle tlačítek přepíná mezi zobrazením ID (```d01--d02```), vzdáleností ze dvou senzorů a aktuální prahovou hodnotou, přičemž zároveň indikuje vzdálenost vůči prahu pomocí LED.
 
 ### Časování měření
- - Každý senzor měří 1× za sekundu.
+ - Každý senzor měří 1× za 0,5 s (50M cyklů při 100 MHz (viz controller.vhd)).
 
 ![stavy](https://github.com/user-attachments/assets/8a4470cd-790a-4b2e-9de4-82cee64efdc9)
 
