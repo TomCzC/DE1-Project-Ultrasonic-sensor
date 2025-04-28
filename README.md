@@ -51,7 +51,7 @@ Použité komponenty
 
 <img src="images/sensor_connection.jpg" alt="top level block diagram" width="200"/>
 *Obr. 2 Propojení HC-SR04 s piny desky Nexys A7-50t (zdroj: GitHub [vhdl-course Tomas Fryza](https://github.com/tomas-fryza/vhdl-labs/blob/master/lab8-project/images/ultrasonic_resistors.jpg))*
-
+[vhdl-course Tomas Fryza](https://github.com/tomas-fryza/vhdl-labs/blob/master/lab8-project/images/ultrasonic_resistors.jpg)
 ## ⚙️ Funkce systému
 
 **1. Měření vzdálenosti**
