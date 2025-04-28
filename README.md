@@ -20,7 +20,7 @@ Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senz
    - Rozlišení: **1 cm** (výpočet v ```echo_receiver.vhd``` pomocí ```ONE_CM``` konstanty)
  - **Zobrazení:**
    - 7-segmentový displej (výchozí režim: ```d01--d02```).
-   - Prahová hodnota *Threshold* nastavitelná přepínač ```SW [8:0]```.
+   - Prahová hodnota Threshold nastavitelná přepínači ```SW [8:0]```.
  - **Signalizace:**
    - LED indikace (levé: LED15-LED13, pravé: LED2-LED0)
  
