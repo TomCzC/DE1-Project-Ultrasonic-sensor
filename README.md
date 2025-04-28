@@ -47,6 +47,9 @@ Použité komponenty
 ## 🛠️ Hardware design
 
 <img src="images/top_level schematic.jpg" alt="top level block diagram" width="1000"/>
+*Obr. 1 Schéma návrhu řešení*
+
+*Obr. 2 Propojení HC-SR04 s piny desky Nexys A7-50t (zdroj: GitHub [vhdl-course Tomas Fryza](https://github.com/tomas-fryza/vhdl-labs/blob/master/lab8-project/images/ultrasonic_resistors.jpg))*
 
 ## ⚙️ Funkce systému
 
