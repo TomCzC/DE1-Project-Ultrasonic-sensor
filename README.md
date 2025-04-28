@@ -16,13 +16,13 @@
 
 Tento projekt realizuje měření vzdálenosti pomocí dvou ultrazvukových senzorů HS-SR04, řízených FPGA. Systém umožňuje:
  - **Měření vzdálenosti:**
-   - Rozsah: **2-400 cm**
-   - Rozlišení: **1 cm** (výpočet v ```echo_receiver.vhd``` pomocí ```ONE_CM``` konstanty)
+   - Rozsah: **2-400 cm** s rozlišením 1 cm (výpočet v ```echo_receiver.vhd``` pomocí ```ONE_CM``` konstanty).
+   - Dva nezávislé senzory (levý/pravý).
  - **Zobrazení:**
    - 7-segmentový displej (výchozí režim: ```d01--d02```).
    - Prahová hodnota Threshold nastavitelná přepínači ```SW [8:0]```.
  - **Signalizace:**
-   - LED indikace (levé: LED15-LED13, pravé: LED2-LED0)
+   - LED indikace (levé: LED15-LED13, pravé: LED2-LED0).
  
 ## 🔌 Hardware
 
@@ -201,13 +201,13 @@ A dual-sensor ultrasonic measurement system built on the Nexys A7-50T FPGA, feat
 
 This project implements distance measurement using two HS-SR04 ultrasonic sensors, controlled by FPGA. The system allows:
  - **Distance Measurement:**
-   - Range: **2-400 cm**
-   - Resolution: **1 cm** (calculated in ```echo_receiver.vhd``` using the ```ONE_CM``` constant)
+   - Range: **2-400 cm** with 1 cm resolution (calculated in ```echo_receiver.vhd``` using the ```ONE_CM``` constant).
+   - Dual independent sensors (left/right).
  - **Display:**
    - 7-segment display (default mode: ```d01--d02```).
    - Threshold adjustable via switch ```SW [8:0]```.
  - **Signaling:**
-   - LED indicators (left: LED15-LED13, right: LED2-LED0)
+   - LED indicators (left: LED15-LED13, right: LED2-LED0).
 
 ## 🔌 Hardware
 
