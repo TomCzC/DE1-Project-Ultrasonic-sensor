@@ -47,10 +47,12 @@ Použité komponenty
 ## 🛠️ Hardware design
 
 <img src="images/top_level schematic.jpg" alt="top level block diagram" width="1000"/>
-*Obr. 1 Schéma návrhu řešení*
+
+Obr. 1 Schéma návrhu řešení
 
 <img src="images/sensor_connection.jpg" alt="top level block diagram" width="200"/>
-Obr. 2 Propojení HC-SR04 s piny desky Nexys A7-50t zdroj: GitHub [vhdl-course Tomas Fryza](https://github.com/tomas-fryza/vhdl-labs/blob/master/lab8-project/).
+
+Obr. 2 Propojení HC-SR04 s piny desky Nexys A7-50t *(zdroj: GitHub [vhdl-course Tomas Fryza](https://github.com/tomas-fryza/vhdl-labs/blob/master/lab8-project/))*
 
 ## ⚙️ Funkce systému
 
@@ -147,6 +149,13 @@ Components used:
 ## 🛠️ Hardware Design
 
 <img src="images/top_level schematic.jpg" alt="top level block diagram" width="1000"/>
+Fig. 1 Solution design schematic
+
+
+<img src="images/sensor_connection.jpg" alt="top level block diagram" width="200"/>
+
+Fig. 2 HC-SR04 connection to Nexys A7-50T board pins *(source: GitHub [vhdl-course Tomas Fryza](https://github.com/tomas-fryza/vhdl-labs/blob/master/lab8-project/))*
+
 
 ## ⚙️ System Functionality
 
