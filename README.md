@@ -61,7 +61,7 @@ Použité komponenty
 **2. Zobrazení na 7-segmentovém displeji**
  - **Výchozí režim:** Zobrazuje ID senzorů → ```d01--d02```.
  - **Ovládání tlačítky:**
-   - Stisk ```BTNC```: Zobrazí aktuální vzdálenosti v cm (levý a pravý senzor).
+   - Stisk ```BTNC```: Zobrazí aktuální vzdálenosti v cm pro levý a pravý senzor (např. ```200--300```).
    - Stisk ```BTND```: Zobrazí nastavený práh (hodnota z přepínačů ```SW [8:0]```).
 
 **3. Signalizace LED diodami**
@@ -246,7 +246,7 @@ Components used:
 **2. Display on 7-segment Display**
  - **Default mode:** Displays sensor IDs → ```d01--d02```.
  - **Button control:**
-   - Press ```BTNC```: Displays current distances in cm (left and right sensor).
+   - Press ```BTNC```: Displays current distances in cm for left and right sensor (e.g. ```200--300```).
    - Press ```BTND```: Displays the set threshold (value from switches ```SW [8:0]```).
 
 **3. LED Signaling**
