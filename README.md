@@ -46,7 +46,7 @@ Použité komponenty
 
 ## 🛠️ Hardware design
 
-<img src="images/top_level schematic.jpg" alt="top level block diagram" width="1000"/>
+<img src="images/Screenshot 2025-04-25 104537.png" alt="top level block diagram" width="1000"/>
 
 Obr. 1 Schéma návrhu řešení
 
@@ -148,7 +148,7 @@ Components used:
 
 ## 🛠️ Hardware Design
 
-<img src="images/top_level schematic.jpg" alt="top level block diagram" width="1000"/>
+<img src="images/Screenshot 2025-04-25 104537.png" alt="top level block diagram" width="1000"/>
 Fig. 1 Solution design schematic
 
 
