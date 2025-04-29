@@ -110,6 +110,7 @@ Obr. 6 Simulace bloku display_control.vhd
 
 Obr. 7 Ukázky stavů 7-segmentového displeje a signalizačních LED
 
+## Video ukázka měření
 https://github.com/user-attachments/assets/559e6796-e8bb-4ae0-9059-a520a27b77e6
 
 ---
@@ -205,14 +206,31 @@ Fig. 2 HC-SR04 connection to Nexys A7-50T board pins *(source: GitHub [vhdl-cour
  - [top_level.vhd](project_files/top_level.vhd) – This main 'top' module connects all components together.
  - [echo_receiver.vhd](project_files/echo_receiver.vhd) – This module is used for measuring distance based on the duration of the ```echo_in``` signal. After receiving a pulse, ```echo_in``` is set to logical 1 and ```trig``` starts counting the number of clock cycles, which are then converted into centimeters using the ```ONE_CM``` constant. The result is provided at the ```distance``` output along with a measurement validity indication via the ```status``` signal.
    - When writing the echo_receiver, we were inspired by a project from last year. Our echo_receiver has improved synchronization of the ```echo_in``` input, more precise control of measurement using a state machine, and better resistance to noise. It also detects the rising edge of the ```trig``` signal and works more stably at high clock frequencies.
+<img src="images/simulations/echo_receiver_tb.png" alt="top level block diagram" width="1000"/>
+
+Fig. 3 Simulation of the echo_receiver.vhd
+ 
  - [controller.vhd](project_files/controller.vhd) – This module implements the control unit, periodically generating a ```trigger``` pulse for distance measurement, waiting for an ```echo``` or ```timeout```, processing received data, and evaluating whether the measured distance exceeds the set threshold.
+
+<img src="images/simulations/controller_tb.png" alt="top level block diagram" width="1000"/>
+
+Fig. 4 Simulation of the controller.vhd
+ 
  - [trig_pulse.vhd](project_files/trig_pulse.vhd) – This module generates a pulse of width ```PULSE_WIDTH``` (in clock cycles) on the ```trig_out``` output when it receives a pulse on the start input. It uses a synchronous reset ```rst```. At 100 MHz clock and ```PULSE_WIDTH := 1000```, it generates a pulse of 10 µs.
+
+<img src="images/simulations/trig_pulse_tb.png" alt="top level block diagram" width="1000"/>
+
+Fig. 5 Simulation of the trig_pulse.vhd
+ 
  - [display_control.vhd](project_files/display_control.vhd) – This module implements a 7-segment display control system that switches between displaying sensor IDs (```d01--d02```), distances from two sensors, and the current threshold based on button presses, while simultaneously indicating distance relative to the threshold using LEDs.
 
-## ⏱️ Measurement Timing
- - Each sensor measures once every 0.5 s (50M cycles at 100 MHz (see controller.vhd)).
+<img src="images/simulations/display_control_tb.png" alt="top level block diagram" width="1000"/>
+
+Fig. 6 Simulation of the display_control.vhd
 
 <img src="images/stavy.jpg" alt="Button states" width="750"/>
 
-https://github.com/user-attachments/assets/559e6796-e8bb-4ae0-9059-a520a27b77e6
+Fig. 7 Examples of 7-segment display and signaling LED states
 
+## Video demonstration of measurement
+https://github.com/user-attachments/assets/559e6796-e8bb-4ae0-9059-a520a27b77e6
