@@ -1,0 +1,100 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity tb_echo_receiver is
+end entity;
+
+architecture Behavioral of tb_echo_receiver is
+    -- Component Declaration
+    component echo_receiver
+        generic (
+            MIN_DISTANCE : INTEGER := 10
+        );
+        port (
+            trig      : in  STD_LOGIC;
+            echo_in   : in  STD_LOGIC;
+            clk       : in  STD_LOGIC;
+            rst       : in  STD_LOGIC;
+            distance  : out STD_LOGIC_VECTOR(8 downto 0);
+            status    : out STD_LOGIC
+        );
+    end component;
+
+    -- Signals
+    signal trig     : STD_LOGIC := '0';
+    signal echo_in  : STD_LOGIC := '0';
+    signal clk      : STD_LOGIC := '0';
+    signal rst      : STD_LOGIC := '0';
+    signal distance : STD_LOGIC_VECTOR(8 downto 0);
+    signal status   : STD_LOGIC;
+
+    constant CLK_PERIOD : time := 10 ns; -- 100 MHz clock
+    constant ONE_CM_CYCLES : integer := (100_000_000 * 2) / 34300; -- Počítáno stejně jako v DUTu
+
+begin
+
+    -- Instantiate DUT
+    uut: echo_receiver
+        port map (
+            trig      => trig,
+            echo_in   => echo_in,
+            clk       => clk,
+            rst       => rst,
+            distance  => distance,
+            status    => status
+        );
+
+    -- Clock Generation
+    clk_process : process
+    begin
+        while true loop
+            clk <= '0';
+            wait for CLK_PERIOD/2;
+            clk <= '1';
+            wait for CLK_PERIOD/2;
+        end loop;
+    end process;
+
+    -- Stimulus process
+    stim_proc: process
+    begin
+        -- Apply reset
+        rst <= '1';
+        wait for 50 ns;
+        rst <= '0';
+        wait for 50 ns;
+    
+        -- Send trigger pulse
+        trig <= '1';
+        wait for 10 ns;
+        trig <= '0';
+    
+        -- Short fake echo, shorter than 1 cm
+        wait for 50 ns;  -- Small delay before echo
+        echo_in <= '1';
+        wait for 50 ns;  -- Echo pulse is very short (<< 582 ns needed for 1 cm)
+        echo_in <= '0';
+    
+        -- Wait to observe that no valid distance is captured
+        wait for 500 ns;
+        
+        -- Check if distance remains 0 and status is '0' (you can observe in simulation)
+        
+        -- Now send a real echo, long enough
+        trig <= '1';
+        wait for 10 ns;
+        trig <= '0';
+        
+        wait for 50 ns;  -- Short wait before starting echo
+        echo_in <= '1';
+        wait for 700 ns;  -- Pulse longer than needed for 1 cm
+        echo_in <= '0';
+        
+        -- Wait to observe the correct distance and status = '1'
+        wait for 1000 ns;
+        
+        wait; -- End of simulation
+    end process;
+
+end architecture;
