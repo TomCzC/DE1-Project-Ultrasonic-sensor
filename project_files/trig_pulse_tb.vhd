@@ -1,3 +1,7 @@
+-- Testbench for trig_pulse module
+-- Automatically generated at https://vhdl.lapinoo.net
+-- Generation date: 2.4.2024 09:38:54 UTC
+
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -6,70 +10,92 @@ end tb_trig_pulse;
 
 architecture tb of tb_trig_pulse is
 
+    -- Declaration of the DUT (Device Under Test)
     component trig_pulse
-        port (clk   : in std_logic;
-              start : in std_logic;
-              trig1 : out std_logic;
-              trig2 : out std_logic;
-              trig3 : out std_logic;
-              trig4 : out std_logic);
+        generic (
+            PULSE_WIDTH : integer
+        );
+        port (
+            start    : in  std_logic;
+            trig_out : out std_logic;
+            clk      : in  std_logic;
+            rst      : in  std_logic
+        );
     end component;
 
-    signal clk   : std_logic;
-    signal start : std_logic;
-    signal trig1 : std_logic;
-    signal trig2 : std_logic;
-    signal trig3 : std_logic;
-    signal trig4 : std_logic;
+    -- Signals to connect to DUT
+    signal start    : std_logic := '0';
+    signal trig_out : std_logic;
+    signal clk      : std_logic := '0';
+    signal rst      : std_logic;
 
-    constant TbPeriod : time := 10 ns; -- ***EDIT*** Put right period here
+    -- Clock period for 100 MHz (10 ns)
+    constant TbPeriod : time := 10 ns;
     signal TbClock : std_logic := '0';
     signal TbSimEnded : std_logic := '0';
 
 begin
 
+    -- DUT instantiation
     dut : trig_pulse
-    port map (clk   => clk,
-              start => start,
-              trig1 => trig1,
-              trig2 => trig2,
-              trig3 => trig3,
-              trig4 => trig4);
+        generic map (
+            PULSE_WIDTH => 10  -- Pulse width for the test
+        )
+        port map (
+            start    => start,
+            trig_out => trig_out,
+            clk      => clk,
+            rst      => rst
+        );
 
-    -- Clock generation
-    TbClock <= not TbClock after TbPeriod/2 when TbSimEnded /= '1' else '0';
-
-    -- ***EDIT*** Check that clk is really your main clock signal
+    -- Clock generation for 100 MHz
+    TbClock <= not TbClock after TbPeriod / 2 when TbSimEnded /= '1' else '0';
     clk <= TbClock;
 
+    -- Stimuli process
     stimuli : process
     begin
-        -- ***EDIT*** Adapt initialization as needed
+        -- Initialize start signal
         start <= '0';
-        -- ***EDIT*** Add stimuli here
-        wait for 10 * TbPeriod;
-        start <='1';
-        wait for 20 * TbPeriod;
-        start <='0';
-        wait for 30 * TbPeriod;
-        start <='1';
+
+        -- Reset generation (active low)
+        rst <= '1';
+        wait for 2 * TbPeriod;  -- Reset pulse duration
+        rst <= '0';
+        wait for 2 * TbPeriod;
+
+        -- Start signal activation (first pulse)
+        start <= '1';
+        wait for 0.5 * TbPeriod;  -- Duration of start signal high
+        start <= '0';
+        wait for 30 * TbPeriod;   -- Wait for next operation
+
+        -- Second pulse with a similar pattern
+        start <= '1';
         wait for 0.5 * TbPeriod;
-        start <='0';
-        wait for 10 * TbPeriod;
-        start <='1';
+        start <= '0';
         wait for 5 * TbPeriod;
-        start<='0';
-        wait for 20 * TbPeriod;    
-        
-        -- Stop the clock and hence terminate the simulation
+
+        -- Reset during pulse to test DUT reset behavior
+        rst <= '1';
+        wait for 2 * TbPeriod;  -- Wait for reset duration
+        rst <= '0';
+        wait for 30 * TbPeriod;
+
+        -- Third pulse initiation
+        start <= '1';
+        wait for 0.5 * TbPeriod;
+        start <= '0';
+        wait for 30 * TbPeriod;
+
+        -- End of simulation
         TbSimEnded <= '1';
-        wait;
+        wait;  -- End the simulation after final events
     end process;
 
 end tb;
 
--- Configuration block below is required by some simulators. Usually no need to edit.
-
+-- Configuration block for some simulators
 configuration cfg_tb_trig_pulse of tb_trig_pulse is
     for tb
     end for;
