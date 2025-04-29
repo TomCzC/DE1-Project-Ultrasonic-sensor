@@ -30,6 +30,7 @@ Použité komponenty
  - FPGA deska Nexys A7-50T
  - Ultrazvukové senzory HC-SR04 (2×)
  - Arduino UNO Digital R3 (2×)
+ - Rezistory 2,2k a 4,7k, nepájivé pole, přepojovací vodiče
 
 ## 🎚️ Zapojení 
 
@@ -150,6 +151,7 @@ Components used:
  - FPGA board Nexys A7-50T
  - Ultrasonic sensors HC-SR04 (2×)
  - Arduino UNO Digital R3 (2×)
+ - Resistors: 2.2k and 4.7k, non-soldering board, wires
 
 ## 🎚️ Wiring
 
