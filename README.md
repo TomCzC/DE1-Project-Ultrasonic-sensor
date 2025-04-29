@@ -83,14 +83,21 @@ Obr. 2 Propojení HC-SR04 s piny desky Nexys A7-50t *(zdroj: GitHub [vhdl-course
 
 📂 **Hlavní soubory**
  - [top_level.vhd](project_files/top_level.vhd) – Tento hlavní 'top' modul propojuje všechny komponenty.
+
+
  - [echo_receiver.vhd](project_files/echo_receiver.vhd) – Tento modul slouží k měření vzdálenosti na základě doby trvání signálu ```echo_in```. Po obdržení impulsu se ```echo_in``` přiřadí hodnota logické 1 a ```trig``` začne počítat počet hodinových cyklů (*clock cycles*), které převede na centimetry pomocí konstanty ```ONE_CM```. Výsledek poskytne na výstupu ```distance``` spolu s indikací platnosti měření pomocí signálu ```status```.
    - Při psaní echo_receiver jsme se inspirovali projektem z minulého roku. Náš echo_receiver má oproti loňské verzi lepší synchronizaci vstupu ```echo_in```, přesnější řízení měření pomocí stavového automatu a vyšší odolnost proti rušení. Navíc detekuje náběžnou hranu signálu ```trig``` a pracuje stabilněji při vysokých hodinových frekvencích.  
- - [controller.vhd](project_files/controller.vhd) – Tento modul implementuje řídicí jednotku, která periodicky generuje ```trigger``` pulz pro měření vzdálenosti, čeká na ```echo``` nebo ```timeout```, zpracuje přijatá data a vyhodnocuje, zda naměřená vzdálenost překročila nastavený práh.
- - [trig_pulse.vhd](project_files/trig_pulse.vhd) – Tento modul generuje pulz šířky ```PULSE_WIDTH``` (v taktech hodin) na výstupu ```trig_out```, když dostane impuls na vstupu start. Používá synchronní reset ```rst```. Při 100 MHz hodinách a ```PULSE_WIDTH := 1000``` vytvoří pulz o délce 10 µs.
- - [display_control.vhd](project_files/display_control.vhd) – Tento modul implementuje systém řízení sedmisegmentového displeje, který podle tlačítek přepíná mezi zobrazením ID (```d01--d02```), vzdáleností ze dvou senzorů a aktuální prahovou hodnotou, přičemž zároveň indikuje vzdálenost vůči prahu pomocí LED.
+<img src="images/simulations/echo_receiver_tb.png" alt="top level block diagram" width="300"/>
 
-## ⏱️ Časování měření
- - Každý senzor měří 1× za 0,5 s (50M cyklů při 100 MHz (viz controller.vhd)).
+ - [controller.vhd](project_files/controller.vhd) – Tento modul implementuje řídicí jednotku, která periodicky generuje ```trigger``` pulz pro měření vzdálenosti, čeká na ```echo``` nebo ```timeout```, zpracuje přijatá data a vyhodnocuje, zda naměřená vzdálenost překročila nastavený práh.
+<img src="images/simulations/controller_tb.png" alt="top level block diagram" width="300"/>
+
+ - [trig_pulse.vhd](project_files/trig_pulse.vhd) – Tento modul generuje pulz šířky ```PULSE_WIDTH``` (v taktech hodin) na výstupu ```trig_out```, když dostane impuls na vstupu start. Používá synchronní reset ```rst```. Při 100 MHz hodinách a ```PULSE_WIDTH := 1000``` vytvoří pulz o délce 10 µs.
+<img src="images/simulations/trig_pulse_tb.png" alt="top level block diagram" width="300"/>
+
+ - [display_control.vhd](project_files/display_control.vhd) – Tento modul implementuje systém řízení sedmisegmentového displeje, který podle tlačítek přepíná mezi zobrazením ID (```d01--d02```), vzdáleností ze dvou senzorů a aktuální prahovou hodnotou, přičemž zároveň indikuje vzdálenost vůči prahu pomocí LED.
+<img src="images/simulations/display_control_tb.png" alt="top level block diagram" width="300"/>
+
 
 <img src="images/stavy.jpg" alt="Button states" width="750"/>
 
