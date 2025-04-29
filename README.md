@@ -59,7 +59,7 @@ Obr. 2 Propojení HC-SR04 s piny desky Nexys A7-50t *(zdroj: GitHub [vhdl-course
 
 **1. Měření vzdálenosti**
  - **Ultrazvukový impuls**
-   - Každých 0,5 s (50M cyklů při 100 MHz) systém vyšle **10 µs pulz** (```trigger```) → aktivuje senzor HC-SR04, který začne vysílat ultrazvukový signál.
+   - Každých 0,5 s (při 100 MHz) systém vyšle **10 µs pulz** (```trigger```) → aktivuje senzor HC-SR04, který začne vysílat ultrazvukový signál.
    - Pokud senzor detekuje echo (odražený signál), vypočte vzdálenost z doby trvání echo pulzu (čas mezi koncem ```trigger``` pulzu a přijetím ```echo``` signálu).
      - Vzdálenost = (doba_echo × rychlost_zvuku) / 2 (```echo_receiver.vhd```)
  - **Detekce překročení rozsahu:**
@@ -181,7 +181,7 @@ Fig. 2 HC-SR04 connection to Nexys A7-50T board pins *(source: GitHub [vhdl-cour
 
 **1. Distance Measurement**
  - **Ultrasonic pulse**
-   - Every 0.5 s (50M cycles at 100 MHz), the system sends a **10 µs pulse** (```trigger```) → activates the HC-SR04 sensor to emit ultrasound.
+   - Every 0.5 s (at 100 MHz), the system sends a **10 µs pulse** (```trigger```) → activates the HC-SR04 sensor to emit ultrasound.
    - If the sensor detects an echo (reflected signal), it calculates distance from the **echo pulse duration** (time between the end of ```trigger``` pulse and ```echo``` reception).
      - Distance = (echo_duration × speed_of_sound) / 2 (implemented in ```echo_receiver.vhd```).
  - **Out of range detection:**
