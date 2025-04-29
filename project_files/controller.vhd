@@ -18,8 +18,8 @@ entity controller is
 end controller;
 
 architecture Behavioral of controller is
-    constant MEASUREMENT_INTERVAL : integer := 50_000_000;  -- 0.5s at 100MHz
-    constant TIMEOUT_DURATION : integer := 25_000_000;      -- 250ms timeout
+    constant MEASUREMENT_INTERVAL : integer := 50_000_000;  -- 0.5s at 100MHz -- Set to 5 during simulation; use 50_000_000 in hardware
+    constant TIMEOUT_DURATION : integer := 25_000_000;      -- 250ms timeout  -- Set to 2 during simulation; use 25_000_000 in hardware
     
     type state_type is (IDLE, SEND_TRIGGER, WAIT_ECHO, PROCESS_DATA);
     signal state : state_type := IDLE;
