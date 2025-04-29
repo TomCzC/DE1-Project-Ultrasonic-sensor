@@ -7,10 +7,10 @@
 
 ## 👥 Členové týmu
 
- - Adam Čermák - Odpovědný za controller a poster
+ - Adam Čermák - Odpovědný za controller
  - Tomáš Běčák - Odpovědný za Github, schéma a display_control
  - Mykhailo Krasichkov - Odpovědný za echo_detect, trig_pulse a zapojení na desce
- - Daniel Kroužil - Odpovědný za Github, controller a poster
+ - Daniel Kroužil - Odpovědný za Github, controller
 
 ## 📝 Popis projektu
 
@@ -128,10 +128,10 @@ https://github.com/user-attachments/assets/559e6796-e8bb-4ae0-9059-a520a27b77e6
 
 ## 👥 Team Members
 
- - Adam Čermák - Responsible for controller and poster
+ - Adam Čermák - Responsible for controller
  - Tomáš Běčák - Responsible for GitHub, schematic, and display_control
  - Mykhailo Krasichkov - Responsible for echo_detect, trig_pulse, and board wiring
- - Daniel Kroužil - Responsible for GitHub, controller, and poster
+ - Daniel Kroužil - Responsible for GitHub, controller
 
 ## 📝 Project Description
 
