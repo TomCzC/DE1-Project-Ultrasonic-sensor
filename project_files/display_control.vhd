@@ -131,9 +131,9 @@ begin
             -- Left sensor LEDs (LED15-LED13)
             if d1 <= th then
                 leds_left <= "111";  -- Object <= threshold
-            elsif (d1 - th) <= 5 then  -- 0-5cm above threshold (replaces THRESHOLD_LEVEL1)
+            elsif (d1 - th) <= 5 then  -- 0-5cm above threshold
                 leds_left <= "110";
-            elsif (d1 - th) <= 10 then  -- 5-10cm above threshold (replaces THRESHOLD_LEVEL2)
+            elsif (d1 - th) <= 10 then  -- 5-10cm above threshold
                 leds_left <= "100";
             else
                 leds_left <= "000";  -- >10cm above threshold
